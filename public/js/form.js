@@ -1,105 +1,100 @@
-
-
 let formsubmitcallback
-document.addEventListener( "DOMContentLoaded", async function() {
-
-  const closeelements = document.querySelectorAll( ".close" )
-  closeelements.forEach( element => {
-    element.addEventListener( "click", ( e ) => {
+document.addEventListener("DOMContentLoaded", async function () {
+  const closeelements = document.querySelectorAll(".close")
+  closeelements.forEach((element) => {
+    element.addEventListener("click", (e) => {
       e.preventDefault()
       closallforms()
-    } )
-  } )
+    })
+  })
 
-  const formelements = document.querySelectorAll( "form" )
-  formelements.forEach( element => {
-    element.addEventListener( "submit", ( e ) => {
+  const formelements = document.querySelectorAll("form")
+  formelements.forEach((element) => {
+    element.addEventListener("submit", (e) => {
       e.preventDefault()
 
-      document.getElementById( "content" ).style.display = "block"
+      document.getElementById("content").style.display = "block"
       // @ts-ignore (it is part of HTML Element)
       element.parentNode.style.display = "none"
 
-      if( formsubmitcallback ) formsubmitcallback()
-    } )
-  } )
-} )
+      if (formsubmitcallback) formsubmitcallback()
+    })
+  })
+})
 
 /**
  * Hide all divs with class container and show main content
  */
 function closallforms() {
-  document.querySelectorAll( "div.container" ).forEach( ( element ) => {
+  document.querySelectorAll("div.container").forEach((element) => {
     // @ts-ignore
     element.style.display = "none"
-  } )
-  document.getElementById( "content" ).style.display = "block"
+  })
+  document.getElementById("content").style.display = "block"
 }
 
 /**
  * Show form by id name
- * @param { string } formid 
+ * @param { string } formid
  */
-export function showform( formid, onsubmit ) {
-  document.getElementById( "content" ).style.display = "none"
+export function showform(formid, onsubmit) {
+  document.getElementById("content").style.display = "none"
 
-  const form = document.getElementById( formid )
+  const form = document.getElementById(formid)
   form.style.display = "block"
 
   formsubmitcallback = onsubmit
 }
 
 /**
- * 
- * @param { string } formitemid 
+ *
+ * @param { string } formitemid
  */
-export function getformfieldvalue( formitemid ) {
+export function getformfieldvalue(formitemid) {
   // @ts-ignore (it does!)
-  return document.getElementById( formitemid ).value
+  return document.getElementById(formitemid).value
 }
 
 /**
- * 
+ *
  * @param { string } formitemid
  * @param { string } value
  */
-export function setformfieldvalue( formitemid, value ) {
+export function setformfieldvalue(formitemid, value) {
   // @ts-ignore (it does!)
-  document.getElementById( formitemid ).value = value
+  document.getElementById(formitemid).value = value
 }
 
-
 /**
- * 
- * @param { string } formid 
+ *
+ * @param { string } formid
  */
-export function clearform( formid ) {
-  const form = document.getElementById( formid )
+export function clearform(formid) {
+  const form = document.getElementById(formid)
 
-  form.querySelectorAll( "input" ).forEach( ( input ) => input.value = "" )
-  form.querySelectorAll( "textarea" ).forEach( ( input ) => input.value = "" )
+  form.querySelectorAll("input").forEach((input) => (input.value = ""))
+  form.querySelectorAll("textarea").forEach((input) => (input.value = ""))
 }
 
 /**
- * 
+ *
  * @param { string } formid
  * @returns { HTMLTableSectionElement }
  */
-export function gettablebody( formid ) {
-  return document.getElementById( formid ).getElementsByTagName( "tbody" )[ 0 ]
+export function gettablebody(formid) {
+  return document.getElementById(formid).getElementsByTagName("tbody")[0]
 }
 
 /**
- * 
- * @param { string } formid 
+ *
+ * @param { string } formid
  */
-export function cleartablerows( formid ) {
-  
-  const table = document.getElementById( formid )
+export function cleartablerows(formid) {
+  const table = document.getElementById(formid)
 
-  const rows = table.getElementsByTagName( "tr" )
-  for( let i = rows.length - 1; i > 0; i-- ) {
+  const rows = table.getElementsByTagName("tr")
+  for (let i = rows.length - 1; 0 < i; i--) {
     // @ts-ignore
-    table.deleteRow( i )
+    table.deleteRow(i)
   }
 }
