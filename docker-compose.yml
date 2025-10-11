@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  nodeapp:
+    build: .
+    container_name: safe-node-dev
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: npm run dev
