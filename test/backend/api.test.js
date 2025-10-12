@@ -2,12 +2,17 @@ const { expect } = require('chai');
 const request = require('supertest');
 const http = require('http');
 const api = require('../../lib/api');
+const TestDatabase = require('../database-setup');
 
 describe('API Module', () => {
   let server;
   let testServer;
+  let testDb;
 
-  before(() => {
+  before(async () => {
+    testDb = new TestDatabase();
+    await testDb.init();
+    await testDb.seedTestData();
     // Create a test server
     server = http.createServer(async (req, res) => {
       const url = new URL(req.url, `http://localhost:3000`);
@@ -37,8 +42,11 @@ describe('API Module', () => {
     testServer = request(server);
   });
 
-  after(() => {
+  after(async () => {
     server.close();
+    if (testDb) {
+      await testDb.cleanup();
+    }
   });
 
   describe('GET /api/people', () => {

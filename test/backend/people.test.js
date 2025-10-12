@@ -1,7 +1,27 @@
 const { expect } = require('chai');
 const people = require('../../lib/people');
+const TestDatabase = require('../database-setup');
 
 describe('People Module', () => {
+  let testDb;
+
+  before(async () => {
+    testDb = new TestDatabase();
+    await testDb.init();
+    await testDb.seedTestData();
+  });
+
+  after(async () => {
+    if (testDb) {
+      await testDb.cleanup();
+    }
+  });
+
+  beforeEach(async () => {
+    await testDb.clearPeople();
+    await testDb.seedTestData();
+  });
+
   describe('get()', () => {
     it('should return an array of people', async () => {
       const result = await people.get();

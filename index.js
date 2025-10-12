@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 
 const api = require('./lib/api');
+const people = require('./lib/people');
 
 const publicdirectory = path.join(__dirname, 'public');
 
@@ -77,6 +78,18 @@ const server = http.createServer(async (req, res) => {
 });
 
 const port = process.env.PORT || 3000;
-server.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+
+// Initialize database and start server
+async function startServer() {
+  try {
+    await people.initDatabase();
+    server.listen(port, () => {
+      console.log(`Server is running on port ${port}`);
+    });
+  } catch (error) {
+    console.error('Failed to start server:', error);
+    process.exit(1);
+  }
+}
+
+startServer();

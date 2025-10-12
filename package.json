@@ -1,4 +1,7 @@
 {
+  "dependencies": {
+    "sqlite3": "^5.1.6"
+  },
   "devDependencies": {
     "@eslint/js": "^9.11.1",
     "eslint": "^8.57.1",
@@ -17,6 +20,9 @@
     "test:backend": "mocha test/backend/**/*.test.js",
     "test:frontend": "mocha test/frontend/**/*.test.js --require jsdom-global/register",
     "test:watch": "mocha --watch",
-    "test:coverage": "echo 'Coverage reporting not configured yet'"
+    "test:coverage": "echo 'Coverage reporting not configured yet'",
+    "db:migrate": "node scripts/migrate.js",
+    "db:reset": "node scripts/reset-db.js",
+    "db:seed": "node scripts/seed.js"
   }
 }
