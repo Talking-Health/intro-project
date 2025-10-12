@@ -96,7 +96,7 @@ th,
 td {
   padding: 12px; /* Increased padding for better readability */
   text-align: left;
-  border-bottom: 1px solid #ddd;
+  border: 2px solid #ddd;
 }
 
 th {
