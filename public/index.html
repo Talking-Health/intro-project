@@ -23,19 +23,10 @@
           <thead>
             <tr>
               <th>Name</th>
-              <th colspan="7">Schedule</th>
+              <th>Email</th>
+              <th>Notes</th>
+              <th>Schedule</th>
               <th>Action</th>
-            </tr>
-            <tr class="days">
-              <th></th>
-              <th class="day-1"></th>
-              <th class="day-2"></th>
-              <th class="day-3"></th>
-              <th class="day-4"></th>
-              <th class="day-5"></th>
-              <th class="day-6"></th>
-              <th class="day-7"></th>
-              <th></th>
             </tr>
           </thead>
           <tbody></tbody>
@@ -62,6 +53,67 @@
         <div class="form-group">
           <label for="personform-notes">Notes</label>
           <textarea id="personform-notes" rows="4"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Weekly Schedule</label>
+          <div class="schedule-grid">
+            <div class="schedule-day">
+              <label for="personform-schedule-0">Monday</label>
+              <select id="personform-schedule-0">
+                <option value="Available">Available</option>
+                <option value="Busy">Busy</option>
+                <option value="Off">Off</option>
+              </select>
+            </div>
+            <div class="schedule-day">
+              <label for="personform-schedule-1">Tuesday</label>
+              <select id="personform-schedule-1">
+                <option value="Available">Available</option>
+                <option value="Busy">Busy</option>
+                <option value="Off">Off</option>
+              </select>
+            </div>
+            <div class="schedule-day">
+              <label for="personform-schedule-2">Wednesday</label>
+              <select id="personform-schedule-2">
+                <option value="Available">Available</option>
+                <option value="Busy">Busy</option>
+                <option value="Off">Off</option>
+              </select>
+            </div>
+            <div class="schedule-day">
+              <label for="personform-schedule-3">Thursday</label>
+              <select id="personform-schedule-3">
+                <option value="Available">Available</option>
+                <option value="Busy">Busy</option>
+                <option value="Off">Off</option>
+              </select>
+            </div>
+            <div class="schedule-day">
+              <label for="personform-schedule-4">Friday</label>
+              <select id="personform-schedule-4">
+                <option value="Available">Available</option>
+                <option value="Busy">Busy</option>
+                <option value="Off">Off</option>
+              </select>
+            </div>
+            <div class="schedule-day">
+              <label for="personform-schedule-5">Saturday</label>
+              <select id="personform-schedule-5">
+                <option value="Available">Available</option>
+                <option value="Busy">Busy</option>
+                <option value="Off">Off</option>
+              </select>
+            </div>
+            <div class="schedule-day">
+              <label for="personform-schedule-6">Sunday</label>
+              <select id="personform-schedule-6">
+                <option value="Available">Available</option>
+                <option value="Busy">Busy</option>
+                <option value="Off">Off</option>
+              </select>
+            </div>
+          </div>
         </div>
         <button type="submit">Save</button>
         <button class="close" type="button">Close</button>
@@ -105,6 +157,44 @@
         <button type="button">Add</button>
         <button class="close" type="button">Close</button>
       </form>
+    </div>
+
+    <!-- Schedule Display Modal -->
+    <div id="scheduleModal" class="container" style="display: none">
+      <div class="schedule-modal-content">
+        <h2 id="scheduleModalTitle">Schedule for Person</h2>
+        <div class="schedule-display">
+          <div class="schedule-row">
+            <span class="day-label">Monday:</span>
+            <span id="schedule-day-0" class="day-status">Available</span>
+          </div>
+          <div class="schedule-row">
+            <span class="day-label">Tuesday:</span>
+            <span id="schedule-day-1" class="day-status">Available</span>
+          </div>
+          <div class="schedule-row">
+            <span class="day-label">Wednesday:</span>
+            <span id="schedule-day-2" class="day-status">Available</span>
+          </div>
+          <div class="schedule-row">
+            <span class="day-label">Thursday:</span>
+            <span id="schedule-day-3" class="day-status">Available</span>
+          </div>
+          <div class="schedule-row">
+            <span class="day-label">Friday:</span>
+            <span id="schedule-day-4" class="day-status">Available</span>
+          </div>
+          <div class="schedule-row">
+            <span class="day-label">Saturday:</span>
+            <span id="schedule-day-5" class="day-status">Available</span>
+          </div>
+          <div class="schedule-row">
+            <span class="day-label">Sunday:</span>
+            <span id="schedule-day-6" class="day-status">Available</span>
+          </div>
+        </div>
+        <button class="close" type="button">Close</button>
+      </div>
     </div>
   </body>
 </html>

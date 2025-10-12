@@ -76,6 +76,11 @@ button {
   transition: background-color 0.3s;
 }
 
+/* Add top spacing for form buttons */
+form button {
+  margin-top: 20px;
+}
+
 button:hover {
   background-color: #38d430; /* Use brand color #38d430 for button hover */
 }
@@ -95,8 +100,166 @@ td {
   padding: 12px; /* Increased padding for better readability */
   text-align: left;
   border-bottom: 1px solid #ddd;
+  vertical-align: middle; /* Center content vertically */
 }
 
 th {
   background-color: #f2f2f2;
+}
+
+/* Schedule button styling */
+.schedule-view-btn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.3s;
+  display: block;
+  margin: 0 auto; /* Center the button horizontally */
+}
+
+.schedule-view-btn:hover {
+  background-color: #218838;
+}
+
+/* Edit button styling */
+.edit-btn {
+  display: block;
+  margin: 0 auto; /* Center the button horizontally */
+}
+
+/* Schedule modal styling */
+.schedule-modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.schedule-display {
+  margin: 20px 0;
+}
+
+.schedule-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.schedule-row:last-child {
+  border-bottom: none;
+}
+
+.day-label {
+  font-weight: bold;
+  min-width: 100px;
+}
+
+.day-status {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.status-available {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status-busy {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.status-off {
+  background-color: #e2e3e5;
+  color: #6c757d;
+}
+
+/* Schedule cell styling */
+.schedule-dropdown {
+  width: 100%;
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 12px;
+  background-color: white;
+}
+
+.schedule-dropdown:focus {
+  outline: none;
+  border-color: #006ab4;
+}
+
+/* Schedule form styling */
+.schedule-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.schedule-day {
+  display: flex;
+  flex-direction: column;
+}
+
+.schedule-day label {
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.schedule-day select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.schedule-day select:focus {
+  outline: none;
+  border-color: #006ab4;
+}
+
+/* Schedule status colors in dropdowns */
+.schedule-dropdown option[value="Available"] {
+  background-color: #d4edda;
+}
+
+.schedule-dropdown option[value="Busy"] {
+  background-color: #f8d7da;
+}
+
+.schedule-dropdown option[value="Off"] {
+  background-color: #e2e3e5;
+}
+
+/* Make table responsive */
+#peopletable {
+  overflow-x: auto;
+  display: block;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  #peopletable {
+    font-size: 14px;
+  }
+  
+  th, td {
+    padding: 8px;
+  }
+  
+  .schedule-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
