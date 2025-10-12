@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test Environment</title>
+  </head>
+  <body>
+    <div id="content">
+      <main>
+        <h1>Welcome</h1>
+        <h2>People</h2>
+        <button id="addperson">Add Person</button>
+        <table id="peopletable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th colspan="7">Schedule</th>
+              <th>Action</th>
+            </tr>
+            <tr class="days">
+              <th></th>
+              <th class="day-1"></th>
+              <th class="day-2"></th>
+              <th class="day-3"></th>
+              <th class="day-4"></th>
+              <th class="day-5"></th>
+              <th class="day-6"></th>
+              <th class="day-7"></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </main>
+    </div>
+
+    <!-- Forms -->
+    <div id="personform" class="container" style="display: none">
+      <form>
+        <h2>Person</h2>
+        <div class="form-group">
+          <label for="personform-name">Name</label>
+          <input type="text" id="personform-name" />
+        </div>
+        <div class="form-group">
+          <label for="personform-email">Email</label>
+          <input type="email" id="personform-email" />
+        </div>
+        <div class="form-group">
+          <label for="personform-notes">Notes</label>
+          <textarea id="personform-notes" rows="4"></textarea>
+        </div>
+        <button type="submit">Save</button>
+        <button class="close" type="button">Close</button>
+      </form>
+    </div>
+  </body>
+</html>

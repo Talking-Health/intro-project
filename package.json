@@ -2,10 +2,21 @@
   "devDependencies": {
     "@eslint/js": "^9.11.1",
     "eslint": "^8.57.1",
-    "globals": "^15.9.0"
+    "globals": "^15.9.0",
+    "mocha": "^10.2.0",
+    "chai": "^4.3.10",
+    "supertest": "^6.3.4",
+    "jsdom": "^24.0.0",
+    "jsdom-global": "^3.0.2",
+    "node-fetch": "^2.7.0"
   },
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "test": "mocha",
+    "test:backend": "mocha test/backend/**/*.test.js",
+    "test:frontend": "mocha test/frontend/**/*.test.js --require jsdom-global/register",
+    "test:watch": "mocha --watch",
+    "test:coverage": "echo 'Coverage reporting not configured yet'"
   }
 }
