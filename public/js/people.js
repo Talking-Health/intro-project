@@ -77,8 +77,19 @@ function editperson( ev ) {
   clearform( "personform" )
   const personrow = findancestorbytype( ev.target, "tr" )
   setformfieldvalue( "personform-name", personrow.person.name )
+  setformfieldvalue( "personform-email", personrow.person.email )
+  setformfieldvalue( "personform-notes", personrow.person.notes )
 
-  showform( "personform", () => console.log("submitted peopleform") )
+  showform( "personform", async () => {
+    
+    await updateperson(
+      personrow.person.id,
+      getformfieldvalue("personform-name"),
+      getformfieldvalue("personform-email"),
+      getformfieldvalue("personform-notes")
+    )
+    await gopeople()
+  })
 
 }
 
@@ -99,6 +110,8 @@ export function addpersondom( person ) {
   // @ts-ignore
   newrow.person = person
   cells[ 0 ].innerText = person.name
+  cells[ 1 ].innerText = person.email
+  cells[ 2 ].innerText = person.notes
 
   const editbutton = document.createElement( "button" )
   editbutton.textContent = "Edit"
