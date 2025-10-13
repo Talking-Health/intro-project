@@ -390,14 +390,20 @@ export function addbuildingdom( building, landlord ) {
   // @ts-ignore (custom property)
   newrow.building = building
 
-  // Populate building data
+  // Populate building data with data-label attributes for mobile
+  cells[0].setAttribute( "data-label", "Name" )
   cells[0].innerText = building.name
+  cells[1].setAttribute( "data-label", "Address" )
   cells[1].innerText = building.address || ""
+  cells[2].setAttribute( "data-label", "Landlord" )
   cells[2].innerText = landlord ? landlord.name : "Unknown"
+  cells[3].setAttribute( "data-label", "Type" )
   cells[3].innerText = building.type || ""
+  cells[4].setAttribute( "data-label", "Year Built" )
   cells[4].innerText = building.yearBuilt ? building.yearBuilt.toString() : ""
 
   // Rooms count with "View Rooms" button
+  cells[5].setAttribute( "data-label", "Rooms" )
   const roomsCount = building.rooms ? building.rooms.length : 0
   const roomsButton = document.createElement( "button" )
   roomsButton.textContent = `View Rooms (${roomsCount})`
@@ -406,6 +412,7 @@ export function addbuildingdom( building, landlord ) {
   cells[5].appendChild( roomsButton )
 
   // Action column - Edit button
+  cells[6].setAttribute( "data-label", "Action" )
   const editbutton = document.createElement( "button" )
   editbutton.textContent = "Edit"
   editbutton.classList.add( "edit-btn" )

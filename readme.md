@@ -15,6 +15,7 @@ A full-stack web application for managing people, landlords, buildings, and room
 ### Technical Features
 - **SQLite Database**: Persistent data storage with proper relationships
 - **RESTful API**: Clean API endpoints for all CRUD operations
+- **Responsive UI**: Modern, mobile-first design with CSS Grid/Flexbox
 - **Comprehensive Testing**: 99 tests with 97%+ coverage using Jest
 - **Code Quality**: ESLint configuration with consistent style enforcement
 - **Modern JavaScript**: ES6+ features with proper error handling

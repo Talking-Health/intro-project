@@ -138,17 +138,23 @@ export function addlandlorddom( landlord ) {
   // @ts-ignore (custom property)
   newrow.landlord = landlord
 
-  // Populate landlord data
+  // Populate landlord data with data-label attributes for mobile
+  cells[0].setAttribute( "data-label", "Name" )
   cells[0].innerText = landlord.name
+  cells[1].setAttribute( "data-label", "Email" )
   cells[1].innerText = landlord.email || ""
+  cells[2].setAttribute( "data-label", "Phone" )
   cells[2].innerText = landlord.phone || ""
+  cells[3].setAttribute( "data-label", "Notes" )
   cells[3].innerText = landlord.notes || ""
 
   // Buildings count
+  cells[4].setAttribute( "data-label", "Buildings" )
   const buildingsCount = landlord.buildings ? landlord.buildings.length : 0
   cells[4].innerText = buildingsCount.toString()
 
   // Action column - Edit button
+  cells[5].setAttribute( "data-label", "Action" )
   const editbutton = document.createElement( "button" )
   editbutton.textContent = "Edit"
   editbutton.classList.add( "edit-btn" )

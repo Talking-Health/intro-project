@@ -19,51 +19,57 @@
 
         <h2>People</h2>
         <button id="addperson">Add Person</button>
-        <table id="peopletable">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Notes</th>
-              <th>Schedule</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
+        <div class="table-wrapper">
+          <table id="peopletable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Notes</th>
+                <th>Schedule</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
 
         <h2>Landlords</h2>
         <button id="addlandlord">Add Landlord</button>
-        <table id="landlordstable">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Notes</th>
-              <th>Buildings</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
+        <div class="table-wrapper">
+          <table id="landlordstable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Notes</th>
+                <th>Buildings</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
 
         <h2>Buildings</h2>
         <button id="addbuilding">Add Building</button>
-        <table id="buildingstable">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Address</th>
-              <th>Landlord</th>
-              <th>Type</th>
-              <th>Year Built</th>
-              <th>Rooms</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
+        <div class="table-wrapper">
+          <table id="buildingstable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Landlord</th>
+                <th>Type</th>
+                <th>Year Built</th>
+                <th>Rooms</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
       </main>
 
       <!--        <footer>
@@ -77,15 +83,15 @@
         <h2>Person</h2>
         <div class="form-group">
           <label for="personform-name">Name</label>
-          <input type="text" id="personform-name" />
+          <input type="text" id="personform-name" placeholder="Enter person's name" />
         </div>
         <div class="form-group">
           <label for="personform-email">Email</label>
-          <input type="email" id="personform-email" />
+          <input type="email" id="personform-email" placeholder="Enter email address" />
         </div>
         <div class="form-group">
           <label for="personform-notes">Notes</label>
-          <textarea id="personform-notes" rows="4"></textarea>
+          <textarea id="personform-notes" rows="4" placeholder="Enter any additional notes"></textarea>
         </div>
         <div class="form-group">
           <label>Weekly Schedule</label>
@@ -198,19 +204,19 @@
         <h2>Landlord</h2>
         <div class="form-group">
           <label for="landlordform-name">Name</label>
-          <input type="text" id="landlordform-name" required />
+          <input type="text" id="landlordform-name" required placeholder="Enter landlord name" />
         </div>
         <div class="form-group">
           <label for="landlordform-email">Email</label>
-          <input type="email" id="landlordform-email" />
+          <input type="email" id="landlordform-email" placeholder="Enter email address" />
         </div>
         <div class="form-group">
           <label for="landlordform-phone">Phone</label>
-          <input type="text" id="landlordform-phone" />
+          <input type="text" id="landlordform-phone" placeholder="Enter phone number" />
         </div>
         <div class="form-group">
           <label for="landlordform-notes">Notes</label>
-          <textarea id="landlordform-notes" rows="4"></textarea>
+          <textarea id="landlordform-notes" rows="4" placeholder="Enter any additional notes"></textarea>
         </div>
         <button type="submit">Save</button>
         <button class="close" type="button">Close</button>
@@ -223,11 +229,11 @@
         <h2>Building</h2>
         <div class="form-group">
           <label for="buildingform-name">Name</label>
-          <input type="text" id="buildingform-name" required />
+          <input type="text" id="buildingform-name" required placeholder="Enter building name" />
         </div>
         <div class="form-group">
           <label for="buildingform-address">Address</label>
-          <textarea id="buildingform-address" rows="3" required></textarea>
+          <textarea id="buildingform-address" rows="3" required placeholder="Enter building address"></textarea>
         </div>
         <div class="form-group">
           <label for="buildingform-landlord">Landlord</label>
@@ -247,11 +253,11 @@
         </div>
         <div class="form-group">
           <label for="buildingform-yearbuilt">Year Built</label>
-          <input type="number" id="buildingform-yearbuilt" min="1800" max="2030" />
+          <input type="number" id="buildingform-yearbuilt" min="1800" max="2030" placeholder="e.g. 1995" />
         </div>
         <div class="form-group">
           <label for="buildingform-notes">Notes</label>
-          <textarea id="buildingform-notes" rows="4"></textarea>
+          <textarea id="buildingform-notes" rows="4" placeholder="Enter any additional notes about the building"></textarea>
         </div>
         <div class="form-group">
           <div class="rooms-section-header">

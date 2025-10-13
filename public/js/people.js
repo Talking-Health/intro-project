@@ -161,12 +161,16 @@ export function addpersondom( person ) {
   // @ts-ignore
   newrow.person = person
 
-  // Populate person data
+  // Populate person data with data-label attributes for mobile
+  cells[0].setAttribute( "data-label", "Name" )
   cells[0].innerText = person.name
+  cells[1].setAttribute( "data-label", "Email" )
   cells[1].innerText = person.email || ""
+  cells[2].setAttribute( "data-label", "Notes" )
   cells[2].innerText = person.notes || ""
 
   // Schedule column - create "See schedule" button
+  cells[3].setAttribute( "data-label", "Schedule" )
   const scheduleButton = document.createElement( "button" )
   scheduleButton.textContent = "See schedule"
   scheduleButton.classList.add( "schedule-view-btn" )
@@ -174,6 +178,7 @@ export function addpersondom( person ) {
   cells[3].appendChild( scheduleButton )
 
   // Action column - Edit button
+  cells[4].setAttribute( "data-label", "Action" )
   const editbutton = document.createElement( "button" )
   editbutton.textContent = "Edit"
   editbutton.classList.add( "edit-btn" )
