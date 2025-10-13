@@ -4,6 +4,8 @@ const fs = require( "fs" )
 const path = require( "path" )
 
 const api = require( "./lib/api" )
+const { initDatabase } = require( "./lib/database" )
+const { initSampleData } = require( "./lib/init-database" )
 
 const publicdirectory = path.join( __dirname, "public" )
 
@@ -74,6 +76,21 @@ const server = http.createServer( async ( req, res ) => {
 
 
 const port = process.env.PORT || 3000
-server.listen( port, () => {
-  console.log( `Server is running on port ${port}` )
-} )
+
+// Initialize database and start server
+async function startServer() {
+  try {
+    console.log( "Initializing database..." )
+    await initDatabase()
+    await initSampleData()
+    
+    server.listen( port, () => {
+      console.log( `Server is running on port ${port}` )
+    } )
+  } catch ( error ) {
+    console.error( "Failed to start server:", error )
+    process.exit( 1 )
+  }
+}
+
+startServer()
