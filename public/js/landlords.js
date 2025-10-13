@@ -21,6 +21,11 @@ document.addEventListener( "DOMContentLoaded", async function () {
   await golandlords()
 } )
 
+// Listen for cross-module refresh events
+window.addEventListener( "refreshLandlords", async () => {
+  await golandlords()
+} )
+
 /**
  * Fetch all landlords from the API
  * @returns { Promise< object > }
@@ -59,7 +64,7 @@ async function updatelandlord( id, name, email, phone, notes ) {
  * Refresh the landlords table
  * @returns { Promise }
  */
-async function golandlords() {
+export async function golandlords() {
   const landlords = await fetchlandlords()
   cleartablerows( "landlordstable" )
 
@@ -82,6 +87,9 @@ function addlandlordinput() {
       getformfieldvalue( "landlordform-notes" )
     )
     await golandlords()
+
+    // Refresh building dropdown options
+    window.dispatchEvent( new CustomEvent( "refreshLandlordDropdown" ) )
   } )
 }
 
@@ -115,6 +123,10 @@ function editlandlord( ev ) {
     )
     // Refresh the landlords table to show updated data
     await golandlords()
+
+    // Refresh building dropdown options in case name changed
+    window.dispatchEvent( new CustomEvent( "refreshLandlordDropdown" ) )
+
     // Clear the editing state
     // eslint-disable-next-line require-atomic-updates
     currentEditingLandlord = null
@@ -128,7 +140,16 @@ async function deletelandlord( ev ) {
   const landlordrow = findancestorbytype( ev.target, "tr" )
   const landlord = landlordrow.landlord
 
-  const confirmed = await showConfirmDialog( `Are you sure you want to delete ${landlord.name}? This action cannot be undone.` )
+  const buildingCount = landlord.buildings ? landlord.buildings.length : 0
+  let confirmMessage = `Are you sure you want to delete ${landlord.name}?`
+
+  if( 0 < buildingCount ) {
+    confirmMessage += ` This will also delete ${buildingCount} building${1 < buildingCount ? "s" : ""} and all their rooms.`
+  }
+
+  confirmMessage += " This action cannot be undone."
+
+  const confirmed = await showConfirmDialog( confirmMessage )
   if( !confirmed ) {
     return
   }
@@ -136,6 +157,15 @@ async function deletelandlord( ev ) {
   try {
     await deletedata( "landlords", landlord.id )
     await golandlords()
+
+    // Refresh buildings table if any buildings were deleted
+    if( 0 < buildingCount ) {
+      // Trigger a custom event that buildings.js can listen to
+      window.dispatchEvent( new CustomEvent( "refreshBuildings" ) )
+    }
+
+    // Refresh building dropdown options
+    window.dispatchEvent( new CustomEvent( "refreshLandlordDropdown" ) )
   } catch ( error ) {
     alert( `Failed to delete landlord: ${error.message}` )
   }

@@ -6,11 +6,14 @@ A full-stack web application for managing people, landlords, buildings, and room
 
 ## Features
 
-### Core Entities
-- **People Management**: Add, edit, delete, and manage people with weekly schedules
-- **Landlords**: Manage property owners with contact information and building associations (add, edit, delete)
-- **Buildings**: Track buildings with detailed information (type, year built, address) with full CRUD operations
-- **Rooms**: Manage individual rooms within buildings (type, size, notes)
+### Core Functionality
+- **People Management**: Full CRUD operations for managing people with schedules
+- **Building Management**: Complete building and room management with flexible room configurations
+- **Landlord Management**: Landlord registration and building association management with cascading delete functionality
+- **Responsive UI**: Clean, user-friendly interface with modal dialogs, enhanced dropdown styling, and responsive form layouts
+- **Data Validation**: Comprehensive input validation and error handling
+- **Cascading Delete Operations**: Safe delete operations with automatic cleanup of related data (landlords → buildings → rooms)
+- **Enhanced Styling**: Custom dropdown arrows, responsive two-column form layouts, and consistent UI elements
 
 ### Technical Features
 - **SQLite Database**: Persistent data storage with proper relationships and cascade deletes
@@ -32,9 +35,16 @@ A full-stack web application for managing people, landlords, buildings, and room
 # Install dependencies
 npm install
 
+# Initialize database with schema and comprehensive dummy data
+node lib/init-database.js
+
 # Start the application
 npm start
+
+# Visit http://localhost:3000 in your browser
 ```
+
+The database initialization includes realistic dummy data with 8 people, 6 landlords, 10 buildings, and 40+ rooms with detailed descriptions to help you explore the application immediately.
 
 Then open your browser to `http://localhost:3000`
 

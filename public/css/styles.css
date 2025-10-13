@@ -369,7 +369,7 @@ tr:last-child td {
   box-shadow: var(--shadow-xl);
   padding: var(--spacing-xl);
   width: 100%;
-  max-width: 600px;
+  max-width: 90vw; /* Use 90% of viewport width instead of fixed 600px */
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
@@ -395,16 +395,50 @@ tr:last-child td {
   .container form,
   .schedule-modal-content,
   .rooms-modal-content {
-    max-width: 100%;
+    max-width: 95vw; /* Use 95% of viewport width on mobile */
     margin: 0;
     border-radius: var(--radius-lg);
     padding: var(--spacing-lg);
   }
 }
 
+@media (min-width: 1200px) {
+  .container form,
+  .schedule-modal-content,
+  .rooms-modal-content {
+    max-width: 1000px; /* Allow larger forms on bigger screens */
+  }
+}
+
+@media (min-width: 1600px) {
+  .container form,
+  .schedule-modal-content,
+  .rooms-modal-content {
+    max-width: 1200px; /* Even larger on very big screens */
+  }
+}
+
 /* Forms */
 .form-group {
   margin-bottom: var(--spacing-lg);
+}
+
+/* Two-column layout for wider forms */
+@media (min-width: 768px) {
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+    align-items: start;
+  }
+  
+  .form-row .form-group {
+    margin-bottom: 0;
+  }
+  
+  .form-full-width {
+    grid-column: 1 / -1;
+  }
 }
 
 label {
@@ -423,12 +457,24 @@ select {
   width: 100%;
   padding: var(--spacing-md);
   border: 2px solid var(--gray-300);
+  border-bottom: 2px solid var(--gray-400); /* Clear bottom border */
   border-radius: var(--radius-md);
   font-size: var(--font-size-base);
   font-family: var(--font-family-base);
   transition: all var(--transition-base);
   background-color: var(--white);
   min-height: 44px; /* Accessibility */
+}
+
+/* Improved dropdown arrow styling for select elements */
+select {
+  appearance: none; /* Remove default styling */
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right var(--spacing-md) center;
+  background-size: 16px;
+  padding-right: calc(var(--spacing-md) + 24px); /* Make room for arrow */
+  cursor: pointer;
 }
 
 input[type="text"]:focus,
@@ -438,6 +484,7 @@ textarea:focus,
 select:focus {
   outline: none;
   border-color: var(--primary-color);
+  border-bottom-color: var(--primary-color); /* Ensure focused bottom border matches */
   box-shadow: 0 0 0 3px rgba(0, 106, 180, 0.1);
 }
 
@@ -447,6 +494,7 @@ input[type="email"]:not(:focus):not(:placeholder-shown):invalid,
 input[type="number"]:not(:focus):not(:placeholder-shown):invalid,
 textarea:not(:focus):not(:placeholder-shown):invalid {
   border-color: var(--danger-color);
+  border-bottom-color: var(--danger-color); /* Ensure bottom border shows validation state */
   box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
 }
 
@@ -457,6 +505,7 @@ textarea:not(:focus):not(:placeholder-shown):invalid {
 .form-submitted textarea:invalid,
 .form-submitted select:invalid {
   border-color: var(--danger-color);
+  border-bottom-color: var(--danger-color); /* Ensure bottom border shows validation state */
   box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
 }
 
@@ -561,13 +610,24 @@ form button:last-child {
 .schedule-day select {
   padding: var(--spacing-sm);
   border: 2px solid var(--gray-300);
+  border-bottom: 2px solid var(--gray-400); /* Clear bottom border */
   border-radius: var(--radius-md);
   font-size: var(--font-size-sm);
   min-height: 40px;
+  background-color: var(--white);
+  transition: all var(--transition-base);
+  appearance: none; /* Remove default styling */
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right var(--spacing-sm) center;
+  background-size: 14px;
+  padding-right: calc(var(--spacing-sm) + 20px); /* Make room for arrow */
+  cursor: pointer;
 }
 
 .schedule-day select:focus {
   border-color: var(--primary-color);
+  border-bottom-color: var(--primary-color); /* Ensure focused bottom border matches */
   box-shadow: 0 0 0 3px rgba(0, 106, 180, 0.1);
 }
 
@@ -626,15 +686,25 @@ form button:last-child {
   width: 100%;
   padding: var(--spacing-sm);
   border: 2px solid var(--gray-300);
+  border-bottom: 2px solid var(--gray-400); /* Clear bottom border */
   border-radius: var(--radius-md);
   font-size: var(--font-size-sm);
   background-color: var(--white);
   min-height: 36px;
+  transition: all var(--transition-base);
+  appearance: none; /* Remove default styling */
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right var(--spacing-sm) center;
+  background-size: 14px;
+  padding-right: calc(var(--spacing-sm) + 20px); /* Make room for arrow */
+  cursor: pointer;
 }
 
 .schedule-dropdown:focus {
   outline: none;
   border-color: var(--primary-color);
+  border-bottom-color: var(--primary-color); /* Ensure focused bottom border matches */
   box-shadow: 0 0 0 3px rgba(0, 106, 180, 0.1);
 }
 
@@ -698,7 +768,7 @@ form button:last-child {
   color: var(--gray-900);
 }
 
-.room-type {
+.room-type-display {
   color: var(--info-color);
   font-size: var(--font-size-sm);
   font-weight: 600;
@@ -844,6 +914,40 @@ form button:last-child {
 .room-editor-grid textarea {
   width: 100%;
   box-sizing: border-box;
+}
+
+/* Ensure room type dropdown has consistent styling */
+.room-type {
+  width: 100%;
+  padding: var(--spacing-md);
+  border: 2px solid var(--gray-300);
+  border-bottom: 2px solid var(--gray-400); /* Clear bottom border */
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  font-family: var(--font-family-base);
+  transition: all var(--transition-base);
+  background-color: var(--white);
+  color: var(--gray-800); /* Ensure proper text color */
+  min-height: 44px;
+  appearance: none; /* Remove default styling */
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right var(--spacing-md) center;
+  background-size: 16px;
+  padding-right: calc(var(--spacing-md) + 24px); /* Make room for arrow */
+}
+
+.room-type:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  border-bottom-color: var(--primary-color); /* Ensure focused bottom border matches */
+  box-shadow: 0 0 0 3px rgba(0, 106, 180, 0.1);
+}
+
+.room-type:invalid {
+  border-color: var(--danger-color);
+  border-bottom-color: var(--danger-color); /* Ensure bottom border shows validation state */
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
 }
 
 .room-editor-grid label {

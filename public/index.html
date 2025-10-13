@@ -81,15 +81,17 @@
     <div id="personform" class="container" style="display: none">
       <form>
         <h2>Person</h2>
-        <div class="form-group">
-          <label for="personform-name">Name</label>
-          <input type="text" id="personform-name" placeholder="Enter person's name" />
+        <div class="form-row">
+          <div class="form-group">
+            <label for="personform-name">Name</label>
+            <input type="text" id="personform-name" placeholder="Enter person's name" />
+          </div>
+          <div class="form-group">
+            <label for="personform-email">Email</label>
+            <input type="email" id="personform-email" placeholder="Enter email address" />
+          </div>
         </div>
-        <div class="form-group">
-          <label for="personform-email">Email</label>
-          <input type="email" id="personform-email" placeholder="Enter email address" />
-        </div>
-        <div class="form-group">
+        <div class="form-group form-full-width">
           <label for="personform-notes">Notes</label>
           <textarea id="personform-notes" rows="4" placeholder="Enter any additional notes"></textarea>
         </div>
@@ -202,19 +204,21 @@
     <div id="landlordform" class="container" style="display: none">
       <form>
         <h2>Landlord</h2>
-        <div class="form-group">
-          <label for="landlordform-name">Name</label>
-          <input type="text" id="landlordform-name" required placeholder="Enter landlord name" />
-        </div>
-        <div class="form-group">
-          <label for="landlordform-email">Email</label>
-          <input type="email" id="landlordform-email" placeholder="Enter email address" />
+        <div class="form-row">
+          <div class="form-group">
+            <label for="landlordform-name">Name</label>
+            <input type="text" id="landlordform-name" required placeholder="Enter landlord name" />
+          </div>
+          <div class="form-group">
+            <label for="landlordform-email">Email</label>
+            <input type="email" id="landlordform-email" placeholder="Enter email address" />
+          </div>
         </div>
         <div class="form-group">
           <label for="landlordform-phone">Phone</label>
           <input type="text" id="landlordform-phone" placeholder="Enter phone number" />
         </div>
-        <div class="form-group">
+        <div class="form-group form-full-width">
           <label for="landlordform-notes">Notes</label>
           <textarea id="landlordform-notes" rows="4" placeholder="Enter any additional notes"></textarea>
         </div>
@@ -227,35 +231,39 @@
     <div id="buildingform" class="container" style="display: none">
       <form>
         <h2>Building</h2>
-        <div class="form-group">
-          <label for="buildingform-name">Name</label>
-          <input type="text" id="buildingform-name" required placeholder="Enter building name" />
+        <div class="form-row">
+          <div class="form-group">
+            <label for="buildingform-name">Name</label>
+            <input type="text" id="buildingform-name" required placeholder="Enter building name" />
+          </div>
+          <div class="form-group">
+            <label for="buildingform-landlord">Landlord</label>
+            <select id="buildingform-landlord" required>
+              <option value="">Select a landlord...</option>
+            </select>
+          </div>
         </div>
-        <div class="form-group">
+        <div class="form-group form-full-width">
           <label for="buildingform-address">Address</label>
           <textarea id="buildingform-address" rows="3" required placeholder="Enter building address"></textarea>
         </div>
-        <div class="form-group">
-          <label for="buildingform-landlord">Landlord</label>
-          <select id="buildingform-landlord" required>
-            <option value="">Select a landlord...</option>
-          </select>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="buildingform-type">Type</label>
+            <select id="buildingform-type">
+              <option value="">Select type...</option>
+              <option value="Residential">Residential</option>
+              <option value="Commercial">Commercial</option>
+              <option value="Mixed Use">Mixed Use</option>
+              <option value="Industrial">Industrial</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="buildingform-yearbuilt">Year Built</label>
+            <input type="number" id="buildingform-yearbuilt" min="1800" max="2030" placeholder="e.g. 1995" />
+          </div>
         </div>
-        <div class="form-group">
-          <label for="buildingform-type">Type</label>
-          <select id="buildingform-type">
-            <option value="">Select type...</option>
-            <option value="Residential">Residential</option>
-            <option value="Commercial">Commercial</option>
-            <option value="Mixed Use">Mixed Use</option>
-            <option value="Industrial">Industrial</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="buildingform-yearbuilt">Year Built</label>
-          <input type="number" id="buildingform-yearbuilt" min="1800" max="2030" placeholder="e.g. 1995" />
-        </div>
-        <div class="form-group">
+        <div class="form-group form-full-width">
           <label for="buildingform-notes">Notes</label>
           <textarea id="buildingform-notes" rows="4" placeholder="Enter any additional notes about the building"></textarea>
         </div>

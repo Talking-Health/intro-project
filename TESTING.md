@@ -70,11 +70,12 @@ Current test coverage includes:
 ### Landlords Module (`landlords.test.js`)
 - ✅ Getting all landlords with building associations
 - ✅ Adding and updating landlords
-- ✅ Deleting landlords with cascade handling for buildings
+- ✅ Deleting landlords with comprehensive cascade handling (automatically deletes associated buildings and all rooms)
 - ✅ Getting landlords by ID
 - ✅ Building association management (addBuilding, removeBuilding)
 - ✅ Error handling for missing records
 - ✅ Input validation
+- ✅ Cross-module event communication testing
 
 ### Buildings Module (`buildings.test.js`)
 - ✅ Getting all buildings with rooms
@@ -252,11 +253,13 @@ node --inspect-brk node_modules/.bin/jest tests/specific.test.js
 
 ## Current Test Statistics
 
-- **Total Tests**: 112+ comprehensive tests
+- **Total Tests**: 112 comprehensive tests (all passing)
 - **Coverage**: 97%+ line coverage for core business logic
-- **Delete Operations**: Full test coverage for all delete operations and cascade behaviors
+- **Delete Operations**: Full test coverage for all delete operations including comprehensive cascade delete behaviors
+- **Cross-Module Communication**: Event-based module communication thoroughly tested
 - **Error Handling**: Comprehensive error condition testing
 - **Database Operations**: All CRUD operations thoroughly tested
+- **UI Integration**: Frontend form validation and responsive layout testing
 
 ## Future Enhancements
 

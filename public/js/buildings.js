@@ -29,6 +29,15 @@ document.addEventListener( "DOMContentLoaded", async function () {
   await populateLandlordDropdown()
 } )
 
+// Listen for cross-module refresh events
+window.addEventListener( "refreshBuildings", async () => {
+  await gobuildings()
+} )
+
+window.addEventListener( "refreshLandlordDropdown", async () => {
+  await populateLandlordDropdown()
+} )
+
 /**
  * Fetch all buildings from the API
  * @returns { Promise< object > }
@@ -98,7 +107,7 @@ async function updatebuilding( id, name, address, landlordId, type, yearBuilt, n
  * Refresh the buildings table
  * @returns { Promise }
  */
-async function gobuildings() {
+export async function gobuildings() {
   const buildings = await fetchbuildings()
   const landlords = await fetchlandlords()
 
@@ -113,7 +122,7 @@ async function gobuildings() {
 /**
  * Populate the landlord dropdown in the form
  */
-async function populateLandlordDropdown() {
+export async function populateLandlordDropdown() {
   const landlords = await fetchlandlords()
   const dropdown = document.getElementById( "buildingform-landlord" )
 
@@ -284,6 +293,9 @@ function addbuildinginput() {
       rooms
     )
     await gobuildings()
+
+    // Refresh landlords table to update building count
+    window.dispatchEvent( new CustomEvent( "refreshLandlords" ) )
   } )
 }
 
@@ -315,6 +327,8 @@ async function editbuilding( ev ) {
     // Store the building ID to avoid race condition
     const buildingToUpdate = currentEditingBuilding
     const rooms = getRoomsFromForm()
+    const oldLandlordId = buildingToUpdate.landlordId
+    const newLandlordId = parseInt( getformfieldvalue( "buildingform-landlord" ), 10 )
 
     // Update the building with new data from form
     await updatebuilding(
@@ -329,6 +343,12 @@ async function editbuilding( ev ) {
     )
     // Refresh the buildings table to show updated data
     await gobuildings()
+
+    // Refresh landlords table if landlord changed
+    if( oldLandlordId !== newLandlordId ) {
+      window.dispatchEvent( new CustomEvent( "refreshLandlords" ) )
+    }
+
     // Clear the editing state
     // eslint-disable-next-line require-atomic-updates
     currentEditingBuilding = null
@@ -350,6 +370,9 @@ async function deletebuilding( ev ) {
   try {
     await deletedata( "buildings", building.id )
     await gobuildings()
+
+    // Refresh landlords table to update building count
+    window.dispatchEvent( new CustomEvent( "refreshLandlords" ) )
   } catch ( error ) {
     alert( `Failed to delete building: ${error.message}` )
   }

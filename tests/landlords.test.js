@@ -386,7 +386,8 @@ describe( "Landlords Module", () => {
 
       expect( deleteResult ).toEqual( {
         success: true,
-        deletedId: addResult.id
+        deletedId: addResult.id,
+        deletedBuildings: []
       } )
 
       // Verify landlord is actually deleted
@@ -398,7 +399,7 @@ describe( "Landlords Module", () => {
       await expect( landlords.deleteLandlord( 99999 ) ).rejects.toThrow( "Landlord not found" )
     } )
 
-    test( "should prevent deleting landlord with existing buildings", async () => {
+    test( "should cascade delete landlord with existing buildings", async () => {
       // Add a landlord first
       const landlordResult = await landlords.add( null, null, {
         name: "Landlord with Buildings",
@@ -407,19 +408,37 @@ describe( "Landlords Module", () => {
       } )
 
       // Add a building for this landlord
-      await helpers.run(
+      const buildingResult = await helpers.run(
         "INSERT INTO buildings (name, address, landlord_id) VALUES (?, ?, ?)",
         ["Test Building", "123 Test St", landlordResult.id]
       )
 
-      // Attempt to delete the landlord should fail
-      await expect( landlords.deleteLandlord( landlordResult.id ) ).rejects.toThrow(
-        "Cannot delete landlord with existing buildings. Please delete or reassign buildings first."
+      // Add a room to the building
+      await helpers.run(
+        "INSERT INTO rooms (building_id, name, type) VALUES (?, ?, ?)",
+        [buildingResult.lastID, "Test Room", "office"]
       )
 
-      // Verify landlord still exists
+      // Delete the landlord should succeed and cascade delete buildings and rooms
+      const deleteResult = await landlords.deleteLandlord( landlordResult.id )
+      
+      expect( deleteResult ).toEqual( {
+        success: true,
+        deletedId: landlordResult.id,
+        deletedBuildings: [buildingResult.lastID]
+      } )
+
+      // Verify landlord is deleted
       const allLandlords = await landlords.get()
-      expect( allLandlords.find( l => l.id === landlordResult.id ) ).toBeDefined()
+      expect( allLandlords.find( l => l.id === landlordResult.id ) ).toBeUndefined()
+      
+      // Verify building is deleted
+      const allBuildings = await helpers.all( "SELECT * FROM buildings WHERE landlord_id = ?", [landlordResult.id] )
+      expect( allBuildings.length ).toBe( 0 )
+      
+      // Verify room is deleted
+      const allRooms = await helpers.all( "SELECT * FROM rooms WHERE building_id = ?", [buildingResult.lastID] )
+      expect( allRooms.length ).toBe( 0 )
     } )
   } )
 } )
