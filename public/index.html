@@ -31,6 +31,39 @@
           </thead>
           <tbody></tbody>
         </table>
+
+        <h2>Landlords</h2>
+        <button id="addlandlord">Add Landlord</button>
+        <table id="landlordstable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Notes</th>
+              <th>Buildings</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <h2>Buildings</h2>
+        <button id="addbuilding">Add Building</button>
+        <table id="buildingstable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Address</th>
+              <th>Landlord</th>
+              <th>Type</th>
+              <th>Year Built</th>
+              <th>Rooms</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
       </main>
 
       <!--        <footer>
@@ -159,6 +192,83 @@
       </form>
     </div>
 
+    <!-- Landlord Form -->
+    <div id="landlordform" class="container" style="display: none">
+      <form>
+        <h2>Landlord</h2>
+        <div class="form-group">
+          <label for="landlordform-name">Name</label>
+          <input type="text" id="landlordform-name" required />
+        </div>
+        <div class="form-group">
+          <label for="landlordform-email">Email</label>
+          <input type="email" id="landlordform-email" />
+        </div>
+        <div class="form-group">
+          <label for="landlordform-phone">Phone</label>
+          <input type="text" id="landlordform-phone" />
+        </div>
+        <div class="form-group">
+          <label for="landlordform-notes">Notes</label>
+          <textarea id="landlordform-notes" rows="4"></textarea>
+        </div>
+        <button type="submit">Save</button>
+        <button class="close" type="button">Close</button>
+      </form>
+    </div>
+
+    <!-- Building Form -->
+    <div id="buildingform" class="container" style="display: none">
+      <form>
+        <h2>Building</h2>
+        <div class="form-group">
+          <label for="buildingform-name">Name</label>
+          <input type="text" id="buildingform-name" required />
+        </div>
+        <div class="form-group">
+          <label for="buildingform-address">Address</label>
+          <textarea id="buildingform-address" rows="3" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="buildingform-landlord">Landlord</label>
+          <select id="buildingform-landlord" required>
+            <option value="">Select a landlord...</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="buildingform-type">Type</label>
+          <select id="buildingform-type">
+            <option value="">Select type...</option>
+            <option value="Residential">Residential</option>
+            <option value="Commercial">Commercial</option>
+            <option value="Mixed Use">Mixed Use</option>
+            <option value="Industrial">Industrial</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="buildingform-yearbuilt">Year Built</label>
+          <input type="number" id="buildingform-yearbuilt" min="1800" max="2030" />
+        </div>
+        <div class="form-group">
+          <label for="buildingform-notes">Notes</label>
+          <textarea id="buildingform-notes" rows="4"></textarea>
+        </div>
+        <div class="form-group">
+          <div class="rooms-section-header">
+            <label>Rooms</label>
+            <button type="button" id="addRoomBtn" class="add-room-btn">Add Room</button>
+          </div>
+          <div id="roomsEditor" class="rooms-editor">
+            <div class="rooms-list" id="roomsList">
+              <!-- Rooms will be added dynamically -->
+            </div>
+          </div>
+        </div>
+        <button type="submit">Save</button>
+        <button class="close" type="button">Close</button>
+      </form>
+    </div>
+
     <!-- Schedule Display Modal -->
     <div id="scheduleModal" class="container" style="display: none">
       <div class="schedule-modal-content">
@@ -192,6 +302,17 @@
             <span class="day-label">Sunday:</span>
             <span id="schedule-day-6" class="day-status">Available</span>
           </div>
+        </div>
+        <button class="close" type="button">Close</button>
+      </div>
+    </div>
+
+    <!-- Rooms Display Modal -->
+    <div id="roomsModal" class="container" style="display: none">
+      <div class="rooms-modal-content">
+        <h2 id="roomsModalTitle">Rooms in Building</h2>
+        <div id="roomsDisplay" class="rooms-display">
+          <!-- Rooms will be populated dynamically -->
         </div>
         <button class="close" type="button">Close</button>
       </div>

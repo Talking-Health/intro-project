@@ -1,4 +1,6 @@
 import "./people.js"
+import "./landlords.js"
+import "./buildings.js"
 import "./form.js"
 
 document.addEventListener( "DOMContentLoaded", function () {
