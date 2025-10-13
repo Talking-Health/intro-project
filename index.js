@@ -83,7 +83,7 @@ async function startServer() {
     console.log( "Initializing database..." )
     await initDatabase()
     await initSampleData()
-    
+
     server.listen( port, () => {
       console.log( `Server is running on port ${port}` )
     } )
