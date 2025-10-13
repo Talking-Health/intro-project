@@ -7,7 +7,7 @@ export default [
     languageOptions: {
       sourceType: "commonjs",
       ecmaVersion: "latest",
-      globals: globals.browser,
+      globals: { ...globals.browser, ...globals.node },
     },
     rules: {
       "require-atomic-updates": "error",

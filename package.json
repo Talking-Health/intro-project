@@ -7,6 +7,9 @@
     "mocha": "^11.7.4"
   },
   "scripts": {
-  "test": "mocha tests/*.test.js"
+    "test": "mocha tests/*.test.js"
+  },
+  "dependencies": {
+    "sqlite3": "^5.1.7"
   }
 }
