@@ -1,4 +1,4 @@
-import { getdata, putdata } from "./api.js"
+import { getdata, putdata, deletedata } from "./api.js"
 import {
   showform,
   getformfieldvalue,
@@ -8,6 +8,7 @@ import {
   cleartablerows,
 } from "./form.js"
 import { findancestorbytype } from "./dom.js"
+import { showConfirmDialog } from "./modal-utils.js"
 
 // Variable to store the person currently being edited
 let currentEditingPerson = null
@@ -145,6 +146,39 @@ function editperson( ev ) {
 }
 
 /**
+ * Delete person functionality
+ */
+async function deleteperson( ev ) {
+  const personrow = findancestorbytype( ev.target, "tr" )
+  const person = personrow.person
+
+  const confirmed = await showConfirmDialog( `Are you sure you want to delete ${person.name}? This action cannot be undone.` )
+  if( !confirmed ) {
+    return
+  }
+
+  try {
+    await deletedata( "people", person.id )
+    await gopeople()
+  } catch ( error ) {
+    alert( `Failed to delete person: ${error.message}` )
+  }
+}
+
+/**
+ * Handle clicks on action cell text
+ */
+function handleActionClick( ev ) {
+  ev.stopPropagation()
+
+  if( ev.target.classList.contains( "edit-text" ) ) {
+    editperson( ev )
+  } else if( ev.target.classList.contains( "delete-text" ) ) {
+    deleteperson( ev )
+  }
+}
+
+/**
  *
  * @param { object } person
  */
@@ -177,13 +211,11 @@ export function addpersondom( person ) {
   scheduleButton.addEventListener( "click", () => showScheduleModal( person ) )
   cells[3].appendChild( scheduleButton )
 
-  // Action column - Edit button
+  // Action column - Simple text with click handler on the cell
   cells[4].setAttribute( "data-label", "Action" )
-  const editbutton = document.createElement( "button" )
-  editbutton.textContent = "Edit"
-  editbutton.classList.add( "edit-btn" )
-  editbutton.addEventListener( "click", editperson )
-  cells[4].appendChild( editbutton )
+  cells[4].innerHTML = '<span class="edit-text">Edit</span> / <span class="delete-text">Delete</span>'
+  cells[4].classList.add( "action-cell" )
+  cells[4].addEventListener( "click", handleActionClick )
 }
 
 /**
@@ -208,3 +240,4 @@ function showScheduleModal( person ) {
   document.getElementById( "content" ).style.display = "none"
   document.getElementById( "scheduleModal" ).style.display = "block"
 }
+

@@ -600,4 +600,78 @@ describe( "Buildings Module", () => {
       expect( result.notes ).toBeNull()
     } )
   } )
+
+  describe( "deleteBuilding()", () => {
+    test( "should delete existing building successfully", async () => {
+      // Add a landlord first
+      await helpers.run(
+        "INSERT INTO landlords (name, email, phone) VALUES (?, ?, ?)",
+        ["Test Landlord", "test@example.com", "+1-555-0123"]
+      )
+
+      // Add a building
+      const addResult = await buildings.add( null, null, {
+        name: "Delete Test Building",
+        address: "123 Delete St",
+        landlordId: 1,
+        type: "Residential",
+        notes: "Will be deleted"
+      } )
+
+      // Delete the building
+      const deleteResult = await buildings.deleteBuilding( addResult.id )
+
+      expect( deleteResult ).toEqual( {
+        success: true,
+        deletedId: addResult.id
+      } )
+
+      // Verify building is actually deleted
+      const allBuildings = await buildings.get()
+      expect( allBuildings.find( b => b.id === addResult.id ) ).toBeUndefined()
+    } )
+
+    test( "should throw error when deleting non-existent building", async () => {
+      await expect( buildings.deleteBuilding( 99999 ) ).rejects.toThrow( "Building not found" )
+    } )
+
+    test( "should delete building and cascade delete rooms", async () => {
+      // Add a landlord first
+      await helpers.run(
+        "INSERT INTO landlords (name, email, phone) VALUES (?, ?, ?)",
+        ["Test Landlord 2", "test2@example.com", "+1-555-0124"]
+      )
+
+      // Add a building with rooms
+      const rooms = [
+        { name: "Living Room", type: "living", size: 300 },
+        { name: "Bedroom", type: "bedroom", size: 150 }
+      ]
+      const addResult = await buildings.add( null, null, {
+        name: "Building with Rooms",
+        address: "456 Room St",
+        landlordId: 1,
+        type: "Residential",
+        rooms
+      } )
+
+      // Verify rooms were added
+      const buildingWithRooms = await buildings.getById( addResult.id )
+      expect( buildingWithRooms.rooms ).toHaveLength( 2 )
+
+      // Delete the building
+      const deleteResult = await buildings.deleteBuilding( addResult.id )
+
+      expect( deleteResult.success ).toBe( true )
+      expect( deleteResult.deletedId ).toBe( addResult.id )
+
+      // Verify building is deleted
+      const allBuildings = await buildings.get()
+      expect( allBuildings.find( b => b.id === addResult.id ) ).toBeUndefined()
+
+      // Verify rooms are also deleted (cascade)
+      const remainingRooms = await helpers.all( "SELECT * FROM rooms WHERE building_id = ?", [addResult.id] )
+      expect( remainingRooms ).toHaveLength( 0 )
+    } )
+  } )
 } )

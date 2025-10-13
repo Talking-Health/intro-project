@@ -273,4 +273,52 @@ describe( "People Module", () => {
       expect( result.schedule ).toEqual( schedule )
     } )
   } )
+
+  describe( "deletePerson()", () => {
+    test( "should delete existing person successfully", async () => {
+      // Add a person first
+      const addResult = await people.add( null, null, {
+        name: "Delete Test",
+        email: "delete@test.com",
+        notes: "Will be deleted"
+      } )
+
+      // Delete the person
+      const deleteResult = await people.deletePerson( addResult.id )
+
+      expect( deleteResult ).toEqual( {
+        success: true,
+        deletedId: addResult.id
+      } )
+
+      // Verify person is actually deleted
+      const allPeople = await people.get()
+      expect( allPeople.find( p => p.id === addResult.id ) ).toBeUndefined()
+    } )
+
+    test( "should throw error when deleting non-existent person", async () => {
+      await expect( people.deletePerson( 99999 ) ).rejects.toThrow( "Person not found" )
+    } )
+
+    test( "should delete person with schedule", async () => {
+      // Add a person with schedule
+      const schedule = ["Available", "Busy", "Available", "Off", "Available", "Busy", "Off"]
+      const addResult = await people.add( null, null, {
+        name: "Schedule Delete Test",
+        email: "scheduledelete@test.com",
+        notes: "Has schedule",
+        schedule
+      } )
+
+      // Delete the person
+      const deleteResult = await people.deletePerson( addResult.id )
+
+      expect( deleteResult.success ).toBe( true )
+      expect( deleteResult.deletedId ).toBe( addResult.id )
+
+      // Verify person is deleted
+      const allPeople = await people.get()
+      expect( allPeople.find( p => p.id === addResult.id ) ).toBeUndefined()
+    } )
+  } )
 } )

@@ -1,4 +1,4 @@
-import { getdata, putdata } from "./api.js"
+import { getdata, putdata, deletedata } from "./api.js"
 import {
   showform,
   getformfieldvalue,
@@ -8,6 +8,7 @@ import {
   cleartablerows,
 } from "./form.js"
 import { findancestorbytype } from "./dom.js"
+import { showConfirmDialog } from "./modal-utils.js"
 
 // Variable to store the landlord currently being edited
 let currentEditingLandlord = null
@@ -121,6 +122,39 @@ function editlandlord( ev ) {
 }
 
 /**
+ * Delete landlord functionality
+ */
+async function deletelandlord( ev ) {
+  const landlordrow = findancestorbytype( ev.target, "tr" )
+  const landlord = landlordrow.landlord
+
+  const confirmed = await showConfirmDialog( `Are you sure you want to delete ${landlord.name}? This action cannot be undone.` )
+  if( !confirmed ) {
+    return
+  }
+
+  try {
+    await deletedata( "landlords", landlord.id )
+    await golandlords()
+  } catch ( error ) {
+    alert( `Failed to delete landlord: ${error.message}` )
+  }
+}
+
+/**
+ * Handle clicks on action cell text
+ */
+function handleActionClick( ev ) {
+  ev.stopPropagation()
+
+  if( ev.target.classList.contains( "edit-text" ) ) {
+    editlandlord( ev )
+  } else if( ev.target.classList.contains( "delete-text" ) ) {
+    deletelandlord( ev )
+  }
+}
+
+/**
  * Add landlord to the DOM table
  * @param { object } landlord
  */
@@ -153,11 +187,12 @@ export function addlandlorddom( landlord ) {
   const buildingsCount = landlord.buildings ? landlord.buildings.length : 0
   cells[4].innerText = buildingsCount.toString()
 
-  // Action column - Edit button
+  // Action column - Simple text with click handler on the cell
   cells[5].setAttribute( "data-label", "Action" )
-  const editbutton = document.createElement( "button" )
-  editbutton.textContent = "Edit"
-  editbutton.classList.add( "edit-btn" )
-  editbutton.addEventListener( "click", editlandlord )
-  cells[5].appendChild( editbutton )
+  cells[5].innerHTML = '<span class="edit-text">Edit</span> / <span class="delete-text">Delete</span>'
+  cells[5].classList.add( "action-cell" )
+  cells[5].addEventListener( "click", handleActionClick )
 }
+
+
+

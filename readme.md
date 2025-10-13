@@ -7,18 +7,18 @@ A full-stack web application for managing people, landlords, buildings, and room
 ## Features
 
 ### Core Entities
-- **People Management**: Add, edit, and manage people with weekly schedules
-- **Landlords**: Manage property owners with contact information and building associations
-- **Buildings**: Track buildings with detailed information (type, year built, address)
+- **People Management**: Add, edit, delete, and manage people with weekly schedules
+- **Landlords**: Manage property owners with contact information and building associations (add, edit, delete)
+- **Buildings**: Track buildings with detailed information (type, year built, address) with full CRUD operations
 - **Rooms**: Manage individual rooms within buildings (type, size, notes)
 
 ### Technical Features
-- **SQLite Database**: Persistent data storage with proper relationships
-- **RESTful API**: Clean API endpoints for all CRUD operations
-- **Responsive UI**: Modern, mobile-first design with CSS Grid/Flexbox
-- **Comprehensive Testing**: 99 tests with 97%+ coverage using Jest
+- **SQLite Database**: Persistent data storage with proper relationships and cascade deletes
+- **RESTful API**: Clean API endpoints for all CRUD operations including DELETE with validation
+- **Responsive UI**: Modern, mobile-first design with CSS Grid/Flexbox and interactive action columns
+- **Comprehensive Testing**: 112+ tests with 97%+ coverage using Jest (including delete operations)
 - **Code Quality**: ESLint configuration with consistent style enforcement
-- **Modern JavaScript**: ES6+ features with proper error handling
+- **Modern JavaScript**: ES6+ features with proper error handling and custom modal dialogs
 
 ## Quick Start
 
@@ -81,16 +81,19 @@ npm run test:coverage # Run tests with coverage report
 ### People
 - `GET /api/people` - Get all people
 - `PUT /api/people` - Add or update a person
+- `DELETE /api/people` - Delete a person (with cascade handling)
 - `PUT /api/people/schedule` - Update person's schedule
 
 ### Landlords
 - `GET /api/landlords` - Get all landlords
 - `PUT /api/landlords` - Add or update a landlord
+- `DELETE /api/landlords` - Delete a landlord (with cascade handling)
 - `PUT /api/landlords/building` - Associate building with landlord
 
 ### Buildings
 - `GET /api/buildings` - Get all buildings with rooms
 - `PUT /api/buildings` - Add or update a building
+- `DELETE /api/buildings` - Delete a building (with cascade handling)
 - `PUT /api/buildings/room` - Add room to building
 - `PUT /api/buildings/room/update` - Update existing room
 - `PUT /api/buildings/room/delete` - Remove room from building

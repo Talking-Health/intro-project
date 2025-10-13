@@ -1,4 +1,4 @@
-import { getdata, putdata } from "./api.js"
+import { getdata, putdata, deletedata } from "./api.js"
 import {
   showform,
   getformfieldvalue,
@@ -8,6 +8,7 @@ import {
   cleartablerows,
 } from "./form.js"
 import { findancestorbytype } from "./dom.js"
+import { showConfirmDialog } from "./modal-utils.js"
 
 // Variable to store the building currently being edited
 let currentEditingBuilding = null
@@ -335,6 +336,39 @@ async function editbuilding( ev ) {
 }
 
 /**
+ * Delete building functionality
+ */
+async function deletebuilding( ev ) {
+  const buildingrow = findancestorbytype( ev.target, "tr" )
+  const building = buildingrow.building
+
+  const confirmed = await showConfirmDialog( `Are you sure you want to delete ${building.name}? This will also delete all rooms in this building. This action cannot be undone.` )
+  if( !confirmed ) {
+    return
+  }
+
+  try {
+    await deletedata( "buildings", building.id )
+    await gobuildings()
+  } catch ( error ) {
+    alert( `Failed to delete building: ${error.message}` )
+  }
+}
+
+/**
+ * Handle clicks on action cell text
+ */
+function handleActionClick( ev ) {
+  ev.stopPropagation()
+
+  if( ev.target.classList.contains( "edit-text" ) ) {
+    editbuilding( ev )
+  } else if( ev.target.classList.contains( "delete-text" ) ) {
+    deletebuilding( ev )
+  }
+}
+
+/**
  * Show rooms modal with building's rooms
  * @param { object } building
  */
@@ -411,11 +445,12 @@ export function addbuildingdom( building, landlord ) {
   roomsButton.addEventListener( "click", () => showRoomsModal( building ) )
   cells[5].appendChild( roomsButton )
 
-  // Action column - Edit button
+  // Action column - Simple text with click handler on the cell
   cells[6].setAttribute( "data-label", "Action" )
-  const editbutton = document.createElement( "button" )
-  editbutton.textContent = "Edit"
-  editbutton.classList.add( "edit-btn" )
-  editbutton.addEventListener( "click", editbuilding )
-  cells[6].appendChild( editbutton )
+  cells[6].innerHTML = '<span class="edit-text">Edit</span> / <span class="delete-text">Delete</span>'
+  cells[6].classList.add( "action-cell" )
+  cells[6].addEventListener( "click", handleActionClick )
 }
+
+
+

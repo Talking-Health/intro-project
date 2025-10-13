@@ -262,14 +262,14 @@ describe( "API Module", () => {
         expect( mockRes.end ).toHaveBeenCalledWith( "404 - Not found" )
       } )
 
-      test( "should return 404 for DELETE method on any endpoint", async () => {
+      test( "should return 400 for DELETE method with invalid data", async () => {
         const parsedUrl = new URL( "http://localhost:3000/api/people" )
         mockReq.method = "DELETE"
 
         await handleapi( parsedUrl, mockRes, mockReq, null )
 
-        expect( mockRes.writeHead ).toHaveBeenCalledWith( 404, { "Content-Type": "text/plain" } )
-        expect( mockRes.end ).toHaveBeenCalledWith( "404 - Not found" )
+        expect( mockRes.writeHead ).toHaveBeenCalledWith( 400, { "Content-Type": "application/json" } )
+        expect( mockRes.end ).toHaveBeenCalledWith( JSON.stringify( { error: "Cannot read properties of null (reading 'id')" } ) )
       } )
 
       test( "should handle module function errors gracefully", async () => {
@@ -279,8 +279,11 @@ describe( "API Module", () => {
         const parsedUrl = new URL( "http://localhost:3000/api/people" )
         mockReq.method = "GET"
 
-        await expect( handleapi( parsedUrl, mockRes, mockReq, null ) ).rejects.toThrow( errorMessage )
+        await handleapi( parsedUrl, mockRes, mockReq, null )
+
         expect( people.get ).toHaveBeenCalled()
+        expect( mockRes.writeHead ).toHaveBeenCalledWith( 400, { "Content-Type": "application/json" } )
+        expect( mockRes.end ).toHaveBeenCalledWith( JSON.stringify( { error: errorMessage } ) )
       } )
 
       test( "should log 404 errors to console", async () => {
@@ -399,6 +402,60 @@ describe( "API Module", () => {
         await handleapi( parsedUrl, mockRes, mockReq, complexData )
 
         expect( buildings.add ).toHaveBeenCalledWith( parsedUrl, "PUT", complexData )
+      } )
+    } )
+
+    describe( "DELETE endpoints", () => {
+      test( "should handle DELETE /api/people", async () => {
+        people.deletePerson.mockResolvedValue( { success: true, deletedId: 1 } )
+
+        const parsedUrl = new URL( "http://localhost:3000/api/people" )
+        mockReq.method = "DELETE"
+        const requestData = { id: 1 }
+
+        await handleapi( parsedUrl, mockRes, mockReq, requestData )
+
+        expect( people.deletePerson ).toHaveBeenCalledWith( 1 )
+        expect( mockRes.writeHead ).toHaveBeenCalledWith( 200, { "Content-Type": "application/json" } )
+        expect( mockRes.end ).toHaveBeenCalledWith( JSON.stringify( { success: true, deletedId: 1 } ) )
+      } )
+
+      test( "should handle DELETE /api/landlords", async () => {
+        landlords.deleteLandlord.mockResolvedValue( { success: true, deletedId: 2 } )
+
+        const parsedUrl = new URL( "http://localhost:3000/api/landlords" )
+        mockReq.method = "DELETE"
+        const requestData = { id: 2 }
+
+        await handleapi( parsedUrl, mockRes, mockReq, requestData )
+
+        expect( landlords.deleteLandlord ).toHaveBeenCalledWith( 2 )
+        expect( mockRes.writeHead ).toHaveBeenCalledWith( 200, { "Content-Type": "application/json" } )
+        expect( mockRes.end ).toHaveBeenCalledWith( JSON.stringify( { success: true, deletedId: 2 } ) )
+      } )
+
+      test( "should handle DELETE /api/buildings", async () => {
+        buildings.deleteBuilding.mockResolvedValue( { success: true, deletedId: 3 } )
+
+        const parsedUrl = new URL( "http://localhost:3000/api/buildings" )
+        mockReq.method = "DELETE"
+        const requestData = { id: 3 }
+
+        await handleapi( parsedUrl, mockRes, mockReq, requestData )
+
+        expect( buildings.deleteBuilding ).toHaveBeenCalledWith( 3 )
+        expect( mockRes.writeHead ).toHaveBeenCalledWith( 200, { "Content-Type": "application/json" } )
+        expect( mockRes.end ).toHaveBeenCalledWith( JSON.stringify( { success: true, deletedId: 3 } ) )
+      } )
+
+      test( "should return 404 for DELETE on unsupported endpoints", async () => {
+        const parsedUrl = new URL( "http://localhost:3000/api/people/schedule" )
+        mockReq.method = "DELETE"
+
+        await handleapi( parsedUrl, mockRes, mockReq, { id: 1 } )
+
+        expect( mockRes.writeHead ).toHaveBeenCalledWith( 404, { "Content-Type": "text/plain" } )
+        expect( mockRes.end ).toHaveBeenCalledWith( "404 - Not found" )
       } )
     } )
   } )

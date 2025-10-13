@@ -370,4 +370,56 @@ describe( "Landlords Module", () => {
       expect( result.notes ).toBeNull()
     } )
   } )
+
+  describe( "deleteLandlord()", () => {
+    test( "should delete existing landlord successfully", async () => {
+      // Add a landlord first
+      const addResult = await landlords.add( null, null, {
+        name: "Delete Test",
+        email: "delete@test.com",
+        phone: "+1-555-0000",
+        notes: "Will be deleted"
+      } )
+
+      // Delete the landlord
+      const deleteResult = await landlords.deleteLandlord( addResult.id )
+
+      expect( deleteResult ).toEqual( {
+        success: true,
+        deletedId: addResult.id
+      } )
+
+      // Verify landlord is actually deleted
+      const allLandlords = await landlords.get()
+      expect( allLandlords.find( l => l.id === addResult.id ) ).toBeUndefined()
+    } )
+
+    test( "should throw error when deleting non-existent landlord", async () => {
+      await expect( landlords.deleteLandlord( 99999 ) ).rejects.toThrow( "Landlord not found" )
+    } )
+
+    test( "should prevent deleting landlord with existing buildings", async () => {
+      // Add a landlord first
+      const landlordResult = await landlords.add( null, null, {
+        name: "Landlord with Buildings",
+        email: "withbuildings@test.com",
+        phone: "+1-555-0001"
+      } )
+
+      // Add a building for this landlord
+      await helpers.run(
+        "INSERT INTO buildings (name, address, landlord_id) VALUES (?, ?, ?)",
+        ["Test Building", "123 Test St", landlordResult.id]
+      )
+
+      // Attempt to delete the landlord should fail
+      await expect( landlords.deleteLandlord( landlordResult.id ) ).rejects.toThrow(
+        "Cannot delete landlord with existing buildings. Please delete or reassign buildings first."
+      )
+
+      // Verify landlord still exists
+      const allLandlords = await landlords.get()
+      expect( allLandlords.find( l => l.id === landlordResult.id ) ).toBeDefined()
+    } )
+  } )
 } )
