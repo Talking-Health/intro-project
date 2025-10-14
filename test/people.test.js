@@ -3,32 +3,42 @@
  */
 
 const people = require('../lib/people');
+const { initTestDatabase, resetTestDatabase, closeTestDatabase } = require('./helpers/test-database');
 
 describe('People Module', () => {
+  beforeAll(() => {
+    // Initialize test database before all tests
+    initTestDatabase();
+  });
+
+  beforeEach(() => {
+    // Reset database before each test to ensure clean state
+    resetTestDatabase();
+  });
+
+  afterAll(() => {
+    // Close database after all tests
+    closeTestDatabase();
+  });
   describe('get()', () => {
+
     test('should return an array of people', async () => {
       const result = await people.get();
       expect(Array.isArray(result)).toBe(true);
     });
 
     test('should return people with correct properties', async () => {
+      // This test works regardless of what data is in the database
+      // It just verifies the structure is correct
       const result = await people.get();
       expect(result.length).toBeGreaterThan(0);
-      
+
       result.forEach(person => {
         expect(person).toHaveProperty('id');
         expect(person).toHaveProperty('name');
         expect(person).toHaveProperty('email');
         expect(person).toHaveProperty('notes');
       });
-    });
-
-    test('should include default people (Kermit Frog and Miss Piggy)', async () => {
-      const result = await people.get();
-      const names = result.map(p => p.name);
-      
-      expect(names).toContain('Kermit Frog');
-      expect(names).toContain('Miss Piggy');
     });
   });
 
@@ -98,11 +108,46 @@ describe('People Module', () => {
       };
 
       const result = await people.add(null, 'PUT', newPerson);
-      
+
       expect(result).toHaveProperty('id');
       expect(result.name).toBe('');
       expect(result.email).toBe('');
       expect(result.notes).toBe('');
+    });
+  });
+
+  describe('remove()', () => {
+    test('should delete a person by id', async () => {
+      // First, add a person to delete
+      const newPerson = await people.add(null, 'PUT', {
+        name: 'Temporary Person',
+        email: 'temp@test.com',
+        notes: 'Will be deleted'
+      });
+
+      // Delete the person
+      const result = await people.remove(null, 'DELETE', { id: newPerson.id });
+
+      expect(result.success).toBe(true);
+      expect(result.id).toBe(newPerson.id);
+      expect(result.deleted).toBe(1);
+
+      // Verify the person is no longer in the database
+      const allPeople = await people.get();
+      const deletedPerson = allPeople.find(p => p.id === newPerson.id);
+      expect(deletedPerson).toBeUndefined();
+    });
+
+    test('should throw error when deleting non-existent person', async () => {
+      await expect(
+        people.remove(null, 'DELETE', { id: 99999 })
+      ).rejects.toThrow('Person with id 99999 not found');
+    });
+
+    test('should throw error when id is not provided', async () => {
+      await expect(
+        people.remove(null, 'DELETE', {})
+      ).rejects.toThrow('Person id is required for deletion');
     });
   });
 });

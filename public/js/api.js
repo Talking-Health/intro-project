@@ -43,3 +43,34 @@ export async function putdata( api, data ) {
   await fetch( url, request )
 }
 
+/**
+ * Wrapper for all API DELETE requests
+ * @param { string } api
+ * @param { object } data
+ * @returns { Promise< object > }
+ */
+export async function deletedata( api, data ) {
+  try {
+    const request = {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify( data )
+    }
+
+    const url = rooturl + api
+    const response = await fetch( url, request )
+
+    if( response.ok ) {
+      const result = await response.json()
+      return result
+    } else {
+      throw new Error( `Delete request failed with status: ${response.status}` )
+    }
+  } catch (error) {
+    console.error( 'Error deleting data:', error.message )
+    throw error
+  }
+}
+

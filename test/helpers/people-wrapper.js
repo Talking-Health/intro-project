@@ -13,19 +13,42 @@ function addpersondom( person ) {
   const newrow = table.insertRow()
 
   const cells = []
-  for( let i = 0; i < ( 2 + 7 ); i++ ) {
+  // Create cells: Name, Email, Notes, Schedule, Action
+  for( let i = 0; i < 5; i++ ) {
     cells.push( newrow.insertCell( i ) )
   }
 
   // Attach person object to row
   newrow.person = person
-  cells[ 0 ].innerText = person.name
+
+  // Populate cells with data
+  cells[ 0 ].innerText = person.name || ""
+  cells[ 1 ].innerText = person.email || ""
+  cells[ 2 ].innerText = person.notes || ""
+
+  // Format schedule for display (if exists)
+  if( person.schedule ) {
+    // Convert datetime-local format to readable format
+    const scheduleDate = new Date( person.schedule )
+    if( !isNaN( scheduleDate.getTime() ) ) {
+      cells[ 3 ].innerText = scheduleDate.toLocaleString()
+    } else {
+      cells[ 3 ].innerText = person.schedule
+    }
+  } else {
+    cells[ 3 ].innerText = ""
+  }
 
   const editbutton = document.createElement( "button" )
   editbutton.textContent = "Edit"
   // editbutton.addEventListener( "click", editperson )
 
-  cells[ 8 ].appendChild( editbutton )
+  const deletebutton = document.createElement( "button" )
+  deletebutton.textContent = "Delete"
+  // deletebutton.addEventListener( "click", deleteperson )
+
+  cells[ 4 ].appendChild( editbutton )
+  cells[ 4 ].appendChild( deletebutton )
 }
 
 module.exports = {

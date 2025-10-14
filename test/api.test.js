@@ -5,7 +5,8 @@
 // Mock the people module BEFORE requiring api
 jest.mock('../lib/people', () => ({
   get: jest.fn(),
-  add: jest.fn()
+  add: jest.fn(),
+  remove: jest.fn()
 }));
 
 const api = require('../lib/api');
@@ -99,15 +100,31 @@ describe('API Module', () => {
 
     test('should not call people methods for invalid requests', async () => {
       const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation();
-      
+
       const parsedUrl = new URL('http://localhost:3000/api/invalid');
-      
+
       await api.handleapi(parsedUrl, mockRes, mockReq, null);
 
       expect(people.get).not.toHaveBeenCalled();
       expect(people.add).not.toHaveBeenCalled();
-      
+
       consoleErrorSpy.mockRestore();
+    });
+
+    test('should handle DELETE request to /api/people', async () => {
+      const deleteData = { id: 1 };
+      const deleteResult = { success: true, id: 1, deleted: 1 };
+
+      people.remove.mockResolvedValue(deleteResult);
+
+      mockReq.method = 'DELETE';
+      const parsedUrl = new URL('http://localhost:3000/api/people');
+
+      await api.handleapi(parsedUrl, mockRes, mockReq, deleteData);
+
+      expect(people.remove).toHaveBeenCalledWith(parsedUrl, 'DELETE', deleteData);
+      expect(mockRes.writeHead).toHaveBeenCalledWith(200, { 'Content-Type': 'application/json' });
+      expect(mockRes.end).toHaveBeenCalledWith(JSON.stringify(deleteResult));
     });
   });
 });

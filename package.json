@@ -8,5 +8,8 @@
   },
   "scripts": {
     "test": "jest"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.4.1"
   }
 }

@@ -6,7 +6,7 @@
 // Mock fetch globally
 global.fetch = jest.fn();
 
-const { getdata, putdata } = require('./helpers/api-wrapper.js');
+const { getdata, putdata, deletedata } = require('./helpers/api-wrapper.js');
 
 beforeEach(() => {
   // Clear all mocks before each test
@@ -203,6 +203,82 @@ describe('API Module', () => {
 
       // Should not throw
       await expect(putdata('people', { name: 'Test' })).rejects.toThrow('Network error');
+    });
+  });
+
+  describe('deletedata()', () => {
+    test('should send DELETE request with correct data', async () => {
+      const deleteData = { id: 1 };
+      const mockResponse = { success: true, id: 1, deleted: 1 };
+
+      global.fetch.mockResolvedValueOnce({
+        ok: true,
+        json: async () => mockResponse
+      });
+
+      const result = await deletedata('people', deleteData);
+
+      expect(global.fetch).toHaveBeenCalledWith(
+        'http://localhost:3000/api/people',
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(deleteData)
+        }
+      );
+      expect(result).toEqual(mockResponse);
+    });
+
+    test('should handle delete errors', async () => {
+      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation();
+
+      global.fetch.mockResolvedValueOnce({
+        ok: false,
+        status: 404
+      });
+
+      await expect(deletedata('people', { id: 1 })).rejects.toThrow(
+        'Delete request failed with status: 404'
+      );
+
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
+        'Error deleting data:',
+        'Delete request failed with status: 404'
+      );
+
+      consoleErrorSpy.mockRestore();
+    });
+
+    test('should handle network errors during delete', async () => {
+      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation();
+
+      global.fetch.mockRejectedValueOnce(new Error('Network error'));
+
+      await expect(deletedata('people', { id: 1 })).rejects.toThrow('Network error');
+
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
+        'Error deleting data:',
+        'Network error'
+      );
+
+      consoleErrorSpy.mockRestore();
+    });
+
+    test('should parse JSON response correctly', async () => {
+      const mockResponse = { success: true, id: 5, deleted: 1 };
+
+      global.fetch.mockResolvedValueOnce({
+        ok: true,
+        json: async () => mockResponse
+      });
+
+      const result = await deletedata('people', { id: 5 });
+
+      expect(result).toEqual(mockResponse);
+      expect(result.success).toBe(true);
+      expect(result.id).toBe(5);
     });
   });
 });

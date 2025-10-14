@@ -4,6 +4,10 @@ const fs = require( "fs" )
 const path = require( "path" )
 
 const api = require( "./lib/api" )
+const { initDatabase } = require( "./lib/database" )
+
+// Initialize the database
+initDatabase()
 
 const publicdirectory = path.join( __dirname, "public" )
 

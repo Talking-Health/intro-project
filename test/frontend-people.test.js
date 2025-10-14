@@ -40,7 +40,7 @@ describe('People Module', () => {
       expect(finalRows).toBe(initialRows + 1);
     });
 
-    test('should create 9 cells in the row', () => {
+    test('should create 5 cells in the row', () => {
       const person = {
         id: 1,
         name: 'Test Person',
@@ -54,7 +54,7 @@ describe('People Module', () => {
       const lastRow = tbody.getElementsByTagName('tr')[tbody.getElementsByTagName('tr').length - 1];
       const cells = lastRow.getElementsByTagName('td');
 
-      expect(cells.length).toBe(9);
+      expect(cells.length).toBe(5);
     });
 
     test('should set person name in first cell', () => {
@@ -102,7 +102,7 @@ describe('People Module', () => {
 
       const tbody = document.querySelector('#peopletable tbody');
       const lastRow = tbody.getElementsByTagName('tr')[tbody.getElementsByTagName('tr').length - 1];
-      const lastCell = lastRow.getElementsByTagName('td')[8];
+      const lastCell = lastRow.getElementsByTagName('td')[4]; // Changed from 8 to 4
       const button = lastCell.querySelector('button');
 
       expect(button).not.toBeNull();

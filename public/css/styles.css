@@ -98,3 +98,34 @@ th {
   background-color: #f2f2f2;
 }
 
+/* Set column widths and word wrapping */
+#peopletable th:nth-child(1),
+#peopletable td:nth-child(1) {
+  width: 15%; /* Name column */
+}
+
+#peopletable th:nth-child(2),
+#peopletable td:nth-child(2) {
+  width: 20%; /* Email column */
+}
+
+#peopletable th:nth-child(3),
+#peopletable td:nth-child(3) {
+  width: 25%; /* Notes column */
+  max-width: 250px;
+  word-wrap: break-word;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+#peopletable th:nth-child(4),
+#peopletable td:nth-child(4) {
+  width: 25%; /* Schedule column */
+}
+
+#peopletable th:nth-child(5),
+#peopletable td:nth-child(5) {
+  width: 15%; /* Action column */
+  white-space: nowrap;
+}
+
