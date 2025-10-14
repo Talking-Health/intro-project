@@ -129,3 +129,54 @@ th {
   white-space: nowrap;
 }
 
+/* Rooms table column widths */
+#roomstable th:nth-child(1),
+#roomstable td:nth-child(1) {
+  width: 12%; /* Property column */
+}
+
+#roomstable th:nth-child(2),
+#roomstable td:nth-child(2) {
+  width: 15%; /* Address column */
+}
+
+#roomstable th:nth-child(3),
+#roomstable td:nth-child(3) {
+  width: 8%; /* Type column */
+}
+
+#roomstable th:nth-child(4),
+#roomstable td:nth-child(4) {
+  width: 8%; /* Price column */
+}
+
+#roomstable th:nth-child(5),
+#roomstable td:nth-child(5) {
+  width: 10%; /* Available From column */
+}
+
+#roomstable th:nth-child(6),
+#roomstable td:nth-child(6) {
+  width: 8%; /* Status column */
+}
+
+#roomstable th:nth-child(7),
+#roomstable td:nth-child(7) {
+  width: 12%; /* Landlord column */
+}
+
+#roomstable th:nth-child(8),
+#roomstable td:nth-child(8) {
+  width: 17%; /* Notes column */
+  max-width: 200px;
+  word-wrap: break-word;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+#roomstable th:nth-child(9),
+#roomstable td:nth-child(9) {
+  width: 10%; /* Action column */
+  white-space: nowrap;
+}
+

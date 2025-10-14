@@ -20,10 +20,10 @@ Please fork this repo before you start work. When you have completed your projec
 
 Some tasks - choose as many or as few as you would like to complete.
 
-1. Add some tests - a test suite such as Mocha will require adding. The Node backend functions require testing as well as front end functions.
-2. The person table needs to be completed - at the very least complete the edit function.
-3. Convert the backend to use a non-volatile data store - a simple option would be to build in support for SQLite to save data to a database.
-4. We need to add further elements - Landlords and Buildings. Buildings require Rooms.
+1. Add some tests - a test suite such as Mocha will require adding. The Node backend functions require testing as well as front end functions. √√√
+2. The person table needs to be completed - at the very least complete the edit function. √√√
+3. Convert the backend to use a non-volatile data store - a simple option would be to build in support for SQLite to save data to a database. √√√
+4. We need to add further elements - Landlords and Buildings. Buildings require Rooms. √√√
 5. Consider the UI - can it be improved - what would you suggest?
 
 ## Gotchas

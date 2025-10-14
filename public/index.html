@@ -23,7 +23,7 @@
                         <th>Email</th>
                         <th>Notes</th>
                         <th>Schedule</th>
-                        <th>Action</th>
+                        <th>Actions</th>
                     </tr>
                     <!-- <tr class="days">
                         <th></th>
@@ -36,6 +36,25 @@
                         <th class="day-7"></th>
                         <th></th>
                     </tr> -->
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <h2>Rooms</h2>
+            <button id="addroom">Add Room</button>
+            <table id="roomstable">
+                <thead>
+                    <tr>
+                        <th>Property Name</th>
+                        <th>Address</th>
+                        <th>Type</th>
+                        <th>Price</th>
+                        <th>Available From</th>
+                        <th>Status</th>
+                        <th>Landlord Contact</th>
+                        <th>Notes</th>
+                        <th>Actions</th>
+                    </tr>
                 </thead>
                 <tbody>
                 </tbody>
@@ -72,8 +91,59 @@
           </form>
     </div>
 
+    <div id="roomform" class="container" style="display: none;">
+        <form>
+            <h2>Room</h2>
+            <div class="form-group">
+              <label for="roomform-property">Property Name</label>
+              <input type="text" id="roomform-property">
+            </div>
+            <div class="form-group">
+              <label for="roomform-address">Address</label>
+              <input type="text" id="roomform-address">
+            </div>
+            <div class="form-group">
+              <label for="roomform-type">Type</label>
+              <select id="roomform-type">
+                <option value="">Select type...</option>
+                <option value="Studio">Studio</option>
+                <option value="1BR">1 Bedroom</option>
+                <option value="2BR">2 Bedroom</option>
+                <option value="3BR">3 Bedroom</option>
+                <option value="House">House</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="roomform-price">Price (£/month)</label>
+              <input type="number" id="roomform-price" step="0.01" min="0">
+            </div>
+            <div class="form-group">
+              <label for="roomform-available">Available From</label>
+              <input type="date" id="roomform-available">
+            </div>
+            <div class="form-group">
+              <label for="roomform-status">Status</label>
+              <select id="roomform-status">
+                <option value="Available">Available</option>
+                <option value="Pending">Pending</option>
+                <option value="Rented">Rented</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="roomform-landlord">Landlord Contact</label>
+              <input type="email" id="roomform-landlord">
+            </div>
+            <div class="form-group">
+              <label for="roomform-notes">Notes</label>
+              <textarea id="roomform-notes" rows="4"></textarea>
+            </div>
+            <button type="submit">Save</button>
+            <button class="close" type="button">Close</button>
+          </form>
+    </div>
 
-    <div id="workflowform" class="container" style="display: none;">
+    <!-- <div id="workflowform" class="container" style="display: none;">
         <form>
             <h2>Workflow</h2>
             <div class="form-group">
@@ -87,10 +157,10 @@
             <button type="submit">Save</button>
             <button class="close" type="button">Close</button>
           </form>
-    </div>
+    </div> -->
 
 
-    <div id="workflowstepsform" class="container" style="display: none;">
+    <!-- <div id="workflowstepsform" class="container" style="display: none;">
         <form>
             <h2>Workflow Steps</h2>
             <div class="form-group">
@@ -101,15 +171,12 @@
             <div class="ganttchart">
                 <div class="gantttask" style="width: 30%; left: 0%; top: 0%;">Task 1</div>
                 <div class="gantttask" style="width: 40%; left: 30%; top: 20%;">Task 2</div>
-                <!-- Add more tasks as needed -->
+                Add more tasks as needed
             </div>
 
             <button type="button">Add</button>
             <button class="close" type="button">Close</button>
           </form>
-    </div>
+    </div> -->
 </body>
-
-
-
 </html>

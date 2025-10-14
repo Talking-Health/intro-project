@@ -1,6 +1,7 @@
 
 
 import './people.js'
+import './rooms.js'
 import './form.js'
 
 
