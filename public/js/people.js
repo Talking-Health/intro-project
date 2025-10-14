@@ -42,8 +42,7 @@ async function addperson(name, email, notes) {
  * @param { string } notes
  */
 async function updateperson(id, name, email, notes) {
-  const updates = { name, email, notes };
-  await patchdata("people", id, updates);
+  await patchdata("people", { id, name, email, notes });
 }
 
 /**
@@ -108,17 +107,34 @@ export function addpersondom(person) {
   const newrow = table.insertRow();
 
   const cells = [];
-  for (let i = 0; i < 2 + 7; i++) {
+  for (let i = 0; i < 9; i++) {
     cells.push(newrow.insertCell(i));
   }
 
   // @ts-ignore
   newrow.person = person;
+
+  // Name column
   cells[0].innerText = person.name;
 
+  // Schedule columns (7 days)
+  for (let day = 1; day <= 7; day++) {
+    const cell = cells[day];
+    cell.classList.add("editable-day");
+
+    // If this person already has a task set for this day, show it
+    if (person.schedule && person.schedule[day]) {
+      cell.textContent = person.schedule[day];
+    }
+
+    cell.addEventListener("click", () => {
+      showform("workflowform");
+    });
+  }
+
+  // Edit button
   const editbutton = document.createElement("button");
   editbutton.textContent = "Edit";
   editbutton.addEventListener("click", editperson);
-
   cells[8].appendChild(editbutton);
 }
