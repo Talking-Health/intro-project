@@ -1,109 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Work!</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
-    <script type="module" src="js/start.js"></script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Work!</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+
+  <script type="module" src="js/start.js"></script>
+  <script type="module" src="js/lbr.js"></script>
 </head>
 <body>
+  <div id="content">
+    <h1>Information Dashboard</h1>
+    <div class="subtitle">Simple toolkit for managing <strong>People</strong>, <strong>Landlords</strong>, <strong>Buildings</strong> & <strong>Rooms</strong>.</div>
 
-    <div id="content">
-        <main>
-            <h1>Welcome</h1>
+    <!-- People -->
+    <section class="section">
+      <div class="row">
+        <h2>People <span class="badge">Team</span></h2>
+        <button id="addperson" class="btn btn-primary btn-small">+ Add Person</button>
+      </div>
 
-            <h2>People</h2>
-            <button id="addperson"">Add Person</button>
-            <table id="peopletable">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th colspan="7">Schedule</th>
-                        <th>Action</th>
-                    </tr>
-                    <tr class="days">
-                        <th></th>
-                        <th class="day-1"></th>
-                        <th class="day-2"></th>
-                        <th class="day-3"></th>
-                        <th class="day-4"></th>
-                        <th class="day-5"></th>
-                        <th class="day-6"></th>
-                        <th class="day-7"></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </main>
+      <table id="peopletable" class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th colspan="7">Schedule <span class="pill">coming soon</span></th>
+            <th style="width:200px;">Action</th>
+          </tr>
+          <tr class="days">
+            <th></th>
+            <th class="day-1 subtle"></th>
+            <th class="day-2 subtle"></th>
+            <th class="day-3 subtle"></th>
+            <th class="day-4 subtle"></th>
+            <th class="day-5 subtle"></th>
+            <th class="day-6 subtle"></th>
+            <th class="day-7 subtle"></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
 
-<!--        <footer>
-            <p>&copy; 2024 babblevoice. All rights reserved.</p>
-        </footer> -->
-    </div>
+    <!-- Landlords -->
+    <section class="section">
+      <div class="row">
+        <h2>Landlords <span class="badge">Portfolio</span></h2>
+        <button id="addlandlord" class="btn btn-primary btn-small">+ Add Landlord</button>
+      </div>
 
-    <!-- Forms-->
-    <div id="personform" class="container" style="display: none;">
-        <form>
-            <h2>Person</h2>
-            <div class="form-group">
-              <label for="personform-name">Name</label>
-              <input type="text" id="personform-name">
-            </div>
-            <div class="form-group">
-              <label for="personform-email">Email</label>
-              <input type="email" id="personform-email">
-            </div>
-            <div class="form-group">
-              <label for="personform-notes">Notes</label>
-              <textarea id="personform-notes" rows="4"></textarea>
-            </div>
-            <button type="submit">Save</button>
-            <button class="close" type="button">Close</button>
-          </form>
-    </div>
+      <table id="landlordtable" class="table">
+        <thead>
+          <tr><th>Name</th><th>Email</th><th>Notes</th><th style="width:240px;">Action</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
 
+    <!-- Buildings -->
+    <section class="section">
+      <div class="row">
+        <h2>Buildings <span id="selected-landlord" class="subtle">(no landlord selected)</span></h2>
+        <button id="addbuilding" class="btn btn-primary btn-small" disabled>+ Add Building</button>
+      </div>
 
-    <div id="workflowform" class="container" style="display: none;">
-        <form>
-            <h2>Workflow</h2>
-            <div class="form-group">
-              <label for="workflowform-name">Name</label>
-              <input type="text" id="workflowform-name">
-            </div>
-            <div class="form-group">
-              <label for="workflowform-notes">Notes</label>
-              <textarea id="workflowform-notes" rows="4"></textarea>
-            </div>
-            <button type="submit">Save</button>
-            <button class="close" type="button">Close</button>
-          </form>
-    </div>
+      <table id="buildingtable" class="table">
+        <thead>
+          <tr><th>Name</th><th>Address</th><th style="width:240px;">Action</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
 
+    <!-- Rooms -->
+    <section class="section">
+      <div class="row">
+        <h2>Rooms <span id="selected-building" class="subtle">(no building selected)</span></h2>
+        <button id="addroom" class="btn btn-primary btn-small" disabled>+ Add Room</button>
+      </div>
 
-    <div id="workflowstepsform" class="container" style="display: none;">
-        <form>
-            <h2>Workflow Steps</h2>
-            <div class="form-group">
-              <label for="workflowform-name">Name</label>
-              <input type="text" id="workflowform-name" readonly>
-            </div>
+      <table id="roomtable" class="table">
+        <thead>
+          <tr><th>Name</th><th>Capacity</th><th style="width:200px;">Action</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </div>
 
-            <div class="ganttchart">
-                <div class="gantttask" style="width: 30%; left: 0%; top: 0%;">Task 1</div>
-                <div class="gantttask" style="width: 40%; left: 30%; top: 20%;">Task 2</div>
-                <!-- Add more tasks as needed -->
-            </div>
+  <!-- Toasts -->
+  <div id="toast" aria-live="polite" aria-atomic="true"></div>
 
-            <button type="button">Add</button>
-            <button class="close" type="button">Close</button>
-          </form>
-    </div>
+  <!-- Person Modal -->
+  <div id="personform" class="container" style="display:none;">
+    <form>
+      <h2>Person</h2>
+      <div class="form-group">
+        <label for="personform-name">Name</label>
+        <input type="text" id="personform-name"/>
+      </div>
+      <div class="form-group">
+        <label for="personform-email">Email</label>
+        <input type="email" id="personform-email"/>
+      </div>
+      <div class="form-group">
+        <label for="personform-notes">Notes</label>
+        <textarea id="personform-notes" rows="4"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Save</button>
+      <button class="close btn btn-ghost" type="button">Close</button>
+    </form>
+  </div>
+
+  <!-- Landlord Modal -->
+  <div id="landlordform" class="container" style="display:none;">
+    <form>
+      <h2>Landlord</h2>
+      <div class="form-group">
+        <label for="landlord-name">Name</label>
+        <input type="text" id="landlord-name"/>
+      </div>
+      <div class="form-group">
+        <label for="landlord-email">Email</label>
+        <input type="email" id="landlord-email"/>
+      </div>
+      <div class="form-group">
+        <label for="landlord-notes">Notes</label>
+        <textarea id="landlord-notes" rows="4"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Save</button>
+      <button class="close btn btn-ghost" type="button">Close</button>
+    </form>
+  </div>
+
+  <!-- Building Modal -->
+  <div id="buildingform" class="container" style="display:none;">
+    <form>
+      <h2>Building</h2>
+      <div class="form-group">
+        <label for="building-name">Name</label>
+        <input type="text" id="building-name"/>
+      </div>
+      <div class="form-group">
+        <label for="building-address">Address</label>
+        <input type="text" id="building-address"/>
+      </div>
+      <button type="submit" class="btn btn-primary">Save</button>
+      <button class="close btn btn-ghost" type="button">Close</button>
+    </form>
+  </div>
+
+  <!-- Room Modal -->
+  <div id="roomform" class="container" style="display:none;">
+    <form>
+      <h2>Room</h2>
+      <div class="form-group">
+        <label for="room-name">Name</label>
+        <input type="text" id="room-name"/>
+      </div>
+      <div class="form-group">
+        <label for="room-capacity">Capacity</label>
+        <input type="number" id="room-capacity"/>
+      </div>
+      <button type="submit" class="btn btn-primary">Save</button>
+      <button class="close btn btn-ghost" type="button">Close</button>
+    </form>
+  </div>
 </body>
-
-
-
 </html>
