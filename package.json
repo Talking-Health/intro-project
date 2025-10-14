@@ -1,7 +1,21 @@
 {
   "devDependencies": {
     "@eslint/js": "^9.11.1",
+    "chai": "^6.2.0",
+    "cross-env": "^10.1.0",
     "eslint": "^8.57.1",
-    "globals": "^15.9.0"
+    "globals": "^15.9.0",
+    "mocha": "^11.7.4",
+    "supertest": "^7.1.4"
+  },
+  "scripts": {
+    "test": "mocha ",
+    "test-be": "cross-env NODE_ENV=test mocha  __tests__/backend/be-test.js",
+    "start": "node listen.js",
+    "seed": "node db/seed-dev.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "sqlite3": "^5.1.7"
   }
 }
