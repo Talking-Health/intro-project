@@ -10,6 +10,8 @@ document.addEventListener( "DOMContentLoaded", async function() {
   await gopeople()
 } )
 
+let editingPersonId = null
+
 
 /**
  * 
@@ -60,6 +62,7 @@ async function gopeople() {
 function addpersoninput() {
 
   clearform( "personform" )
+  editingPersonId = null
   showform( "personform", async () => {
 
     await addperson( getformfieldvalue( "personform-name" ), 
@@ -76,9 +79,25 @@ function editperson( ev ) {
 
   clearform( "personform" )
   const personrow = findancestorbytype( ev.target, "tr" )
-  setformfieldvalue( "personform-name", personrow.person.name )
+  const p = personrow.person
+  editingPersonId = p.id
 
-  showform( "personform", () => console.log("submitted peopleform") )
+  // prefill all fields
+  setformfieldvalue( "personform-name",  p.name  ?? "" )
+  setformfieldvalue( "personform-email", p.email ?? "" )
+  setformfieldvalue( "personform-notes", p.notes ?? "" )
+
+  // submit updates, refresh table, exit edit mode
+  showform( "personform", async () => {
+    await updateperson(
+      editingPersonId,
+      getformfieldvalue( "personform-name" ),
+      getformfieldvalue( "personform-email" ),
+      getformfieldvalue( "personform-notes" )
+   )
+   editingPersonId = null
+    await gopeople()
+ } )
 
 }
 
