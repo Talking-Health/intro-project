@@ -79,6 +79,7 @@ function editperson(ev) {
   clearform("personform");
   const personrow = findancestorbytype(ev.target, "tr");
   const person = personrow.person;
+
   setformfieldvalue("personform-name", person.name);
   setformfieldvalue("personform-email", person.email);
   setformfieldvalue("personform-notes", person.notes);
