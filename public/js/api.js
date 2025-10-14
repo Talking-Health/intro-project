@@ -1,26 +1,24 @@
-
-
-const rooturl = `${window.location.protocol}//${window.location.host}/api/`
+const rooturl = `${window.location.protocol}//${window.location.host}/api/`;
 
 /**
  * Wrapper for all API GET requests
- * @param { string } api 
+ * @param { string } api
  * @returns { Promise< object > }
  */
-export async function getdata( api ) {
+export async function getdata(api) {
   try {
-    const url = rooturl + api
+    const url = rooturl + api;
 
-    const response = await fetch( url )
+    const response = await fetch(url);
 
-    if( response.ok ) {
-      const data = await response.json()
-      return data
+    if (response.ok) {
+      const data = await response.json();
+      return data;
     } else {
-      throw new Error( `Request failed with status: ${response.status}` )
+      throw new Error(`Request failed with status: ${response.status}`);
     }
   } catch (error) {
-    console.error( 'Error fetching data:', error.message )
+    console.error("Error fetching data:", error.message);
   }
 }
 
@@ -30,16 +28,41 @@ export async function getdata( api ) {
  * @param { object } data
  * @returns { Promise }
  */
-export async function putdata( api, data ) {
+export async function putdata(api, data) {
   const request = {
     method: "PUT",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify( data )
-  }
+    body: JSON.stringify(data),
+  };
 
-  const url = rooturl + api
-  await fetch( url, request )
+  const url = rooturl + api;
+  await fetch(url, request);
 }
 
+/**
+ * PATCH
+ * @param { string } api
+ * @param { object } data
+ * @returns { Promise }
+ */
+
+export async function patchdata(api, id, data) {
+  const request = {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  };
+
+  const url = `${rooturl}${api}/${id}`;
+  const response = await fetch(url, request);
+
+  if (!response.ok) {
+    throw new Error(`Request failed with status: ${response.status}`);
+  }
+
+  return await response.json();
+}
