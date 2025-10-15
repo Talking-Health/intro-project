@@ -166,12 +166,19 @@ export function addroomdom( room ) {
   // @ts-ignore
   newrow.room = room
 
-  // Populate cells with data
+  // Populate cells with data and add data-label for mobile view
   cells[ 0 ].innerText = room.property_name || ""
+  cells[ 0 ].setAttribute( "data-label", "Property" )
+
   cells[ 1 ].innerText = room.address || ""
+  cells[ 1 ].setAttribute( "data-label", "Address" )
+
   cells[ 2 ].innerText = room.room_type || ""
+  cells[ 2 ].setAttribute( "data-label", "Type" )
+
   cells[ 3 ].innerText = room.price ? `£${parseFloat(room.price).toFixed(2)}` : ""
-  
+  cells[ 3 ].setAttribute( "data-label", "Price" )
+
   // Format available_from date for display
   if( room.available_from ) {
     const availDate = new Date( room.available_from )
@@ -183,10 +190,16 @@ export function addroomdom( room ) {
   } else {
     cells[ 4 ].innerText = ""
   }
-  
+  cells[ 4 ].setAttribute( "data-label", "Available From" )
+
   cells[ 5 ].innerText = room.status || ""
+  cells[ 5 ].setAttribute( "data-label", "Status" )
+
   cells[ 6 ].innerText = room.landlord_contact || ""
+  cells[ 6 ].setAttribute( "data-label", "Landlord" )
+
   cells[ 7 ].innerText = room.notes || ""
+  cells[ 7 ].setAttribute( "data-label", "Notes" )
 
   // Create action buttons in the last cell
   const editbutton = document.createElement( "button" )

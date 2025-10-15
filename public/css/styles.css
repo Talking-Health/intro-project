@@ -1,4 +1,10 @@
 /* Reset some default browser styles */
+
+body {
+  background-color: #e6ede8;
+  background: linear-gradient(90deg, rgba(230, 237, 232, 1) 0%, rgba(206, 224, 209, 1) 100%);
+}
+
 body, ul {
   margin: 0;
   padding: 0;
@@ -12,7 +18,15 @@ body, ul {
 /* Basic styling for the content */
 #content {
   flex: 1; /* Grow to fill available space */
-  padding: 20px;
+  margin: 2.5rem; /* Increased margin for better readability */
+  padding: 2.5rem;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 1rem;
+  margin-bottom: 3rem;
+  font-size: 3rem;
 }
 
 /* Basic styling for the footer */
@@ -68,6 +82,7 @@ textarea {
 }
 
 button {
+  margin-bottom: 0;
   background-color: #006ab4; /* Use brand color #006ab4 for buttons */
   color: #fff;
   cursor: pointer;
@@ -80,6 +95,7 @@ button:hover {
 
 table {
   width: 100%;
+  margin: 2.5rem 0 4.5rem;
   border-collapse: collapse;
 }
 
@@ -91,7 +107,7 @@ tr:nth-of-type(2) th {
 th, td {
   padding: 12px; /* Increased padding for better readability */
   text-align: left;
-  border-bottom: 1px solid #ddd;
+  border: 1px solid #b8b6b6;
 }
 
 th {
@@ -178,5 +194,259 @@ th {
 #roomstable td:nth-child(9) {
   width: 10%; /* Action column */
   white-space: nowrap;
+}
+
+
+/* ============================================
+   RESPONSIVE DESIGN - WIDE DESKTOP
+   ============================================ */
+
+/* Wide desktop view (over 1500px) */
+
+@media screen and (min-width: 1500px) {
+  #content {
+    margin: 2% 5%;
+    padding: 2% 5%;
+  }
+}
+
+
+/* ============================================
+   RESPONSIVE DESIGN - MOBILE & TABLET
+   ============================================ */
+
+/* Tablet and Mobile view (up to 1200px) - Card-based layout */
+@media screen and (max-width: 1220px) {
+  body {
+    font-size: 16px;
+  }
+
+  #content {
+    margin: 1.5rem;
+    padding: 1.5rem;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    margin-top: 0.5rem;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  /* Buttons - full width on mobile, auto on tablet */
+  #addperson,
+  #addroom {
+    margin-bottom: 1rem;
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  /* Forms - responsive width */
+  form {
+    width: 90%;
+    max-width: 600px;
+    box-sizing: border-box;
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="number"],
+  input[type="date"],
+  input[type="datetime-local"],
+  select,
+  textarea {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+
+  form button {
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  /* Card-based layout for tables */
+  table {
+    margin: 1.5rem 0 3.5rem;
+  }
+
+  table thead {
+    display: none; /* Hide table headers - use data-label instead */
+  }
+
+  table,
+  table tbody,
+  table tr,
+  table td {
+    display: block;
+    width: 100%;
+  }
+
+  table tr {
+    margin-bottom: 1.5rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1.25rem;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  table td {
+    border: none;
+    padding: 0.75rem 0;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  /* Add labels before each cell using data attributes */
+  table td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    color: #555;
+    font-size: 0.85em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* Action buttons in cards */
+  table td:last-child {
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+    margin-top: 0.5rem;
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+
+  table td:last-child::before {
+    display: none;
+  }
+
+  table td:last-child button {
+    flex: 1;
+    font-size: 15px;
+    padding: 10px;
+  }
+
+  /* Remove fixed column widths - allow natural flow */
+  #peopletable th,
+  #peopletable td,
+  #roomstable th,
+  #roomstable td {
+    width: auto !important;
+    max-width: none !important;
+    white-space: normal !important;
+  }
+}
+
+/* Mobile-specific adjustments (up to 767px) */
+@media screen and (max-width: 767px) {
+  #content {
+    margin: 1rem;
+    padding: 1rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  /* Full width buttons on mobile */
+  #addperson,
+  #addroom {
+    width: 100%;
+  }
+
+  /* Forms - full screen on mobile */
+  .container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: none;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+  }
+
+  form {
+    width: 100%;
+    max-width: 100%;
+    min-height: 100vh;
+    border-radius: 0;
+    margin: 0;
+  }
+
+  form h2 {
+    margin-top: 0;
+  }
+
+  form button {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 14px;
+  }
+
+  table tr {
+    padding: 1rem;
+  }
+
+  table td {
+    padding: 0.5rem 0;
+  }
+
+  table td:last-child button {
+    font-size: 14px;
+  }
+}
+
+/* Small mobile devices (up to 480px) */
+@media screen and (max-width: 480px) {
+  #content {
+    margin: 0.75rem;
+    padding: 0.75rem;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+
+  table tr {
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  table td {
+    font-size: 14px;
+    padding: 0.4rem 0;
+  }
+
+  table td::before {
+    font-size: 14px;
+  }
+
+  table td:last-child button {
+    font-size: 13px;
+    padding: 8px;
+  }
 }
 

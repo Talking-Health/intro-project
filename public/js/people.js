@@ -147,10 +147,15 @@ export function addpersondom( person ) {
   // @ts-ignore
   newrow.person = person
 
-  // Populate cells with data
+  // Populate cells with data and add data-label for mobile view
   cells[ 0 ].innerText = person.name || ""
+  cells[ 0 ].setAttribute( "data-label", "Name" )
+
   cells[ 1 ].innerText = person.email || ""
+  cells[ 1 ].setAttribute( "data-label", "Email" )
+
   cells[ 2 ].innerText = person.notes || ""
+  cells[ 2 ].setAttribute( "data-label", "Notes" )
 
   // Format schedule for display (if exists)
   if( person.schedule ) {
@@ -164,6 +169,7 @@ export function addpersondom( person ) {
   } else {
     cells[ 3 ].innerText = ""
   }
+  cells[ 3 ].setAttribute( "data-label", "Schedule" )
 
   // Create action buttons in the last cell
   const editbutton = document.createElement( "button" )
