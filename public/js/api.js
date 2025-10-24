@@ -1,26 +1,25 @@
-
-
-const rooturl = `${window.location.protocol}//${window.location.host}/api/`
+const rootUrl = `${window.location.protocol}//${window.location.host}/api/`
 
 /**
  * Wrapper for all API GET requests
- * @param { string } api 
- * @returns { Promise< object > }
+ * @param { string } api
+ * @returns { Promise< object | undefined > }
  */
 export async function getdata( api ) {
   try {
-    const url = rooturl + api
+    const url = rootUrl + api
 
     const response = await fetch( url )
 
     if( response.ok ) {
       const data = await response.json()
       return data
-    } else {
-      throw new Error( `Request failed with status: ${response.status}` )
     }
-  } catch (error) {
-    console.error( 'Error fetching data:', error.message )
+
+    throw new Error( `Request failed with status: ${response.status}` )
+  } catch ( error ) {
+    console.error( "Error fetching data:", error.message )
+    return undefined
   }
 }
 
@@ -28,18 +27,17 @@ export async function getdata( api ) {
  * TODO check result
  * @param { string } api
  * @param { object } data
- * @returns { Promise }
+ * @returns { Promise< Response > }
  */
 export async function putdata( api, data ) {
   const request = {
     method: "PUT",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify( data )
+    body: JSON.stringify( data ),
   }
 
-  const url = rooturl + api
-  await fetch( url, request )
+  const url = rootUrl + api
+  return fetch( url, request )
 }
-

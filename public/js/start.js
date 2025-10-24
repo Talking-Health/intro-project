@@ -1,40 +1,36 @@
+import "./people.js"
+import "./form.js"
 
-
-import './people.js'
-import './form.js'
-
-
-document.addEventListener( "DOMContentLoaded", function() {
+document.addEventListener( "DOMContentLoaded", () => {
   configurepeopleheaders()
 } )
 
-
-const daynames = [ "Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat" ]
+const dayNames = [ "Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat" ]
 
 function configurepeopleheaders() {
-  let currentdate = new Date()
+  const currentDate = new Date()
 
   // Calculate the difference in days between the current day and Monday (considering Monday as the first day of the week, where Sunday is 0)
-  let dayofweek = currentdate.getDay()
-  let daysuntilmonday = ( dayofweek === 0 ) ? 6 : ( 1 - dayofweek )
+  const dayOfWeek = currentDate.getDay()
+  const daysUntilMonday = 0 === dayOfWeek ? 6 : 1 - dayOfWeek
 
   // Adjust the date to Monday of this week
-  currentdate.setDate( currentdate.getDate() + daysuntilmonday )
+  currentDate.setDate( currentDate.getDate() + daysUntilMonday )
 
   const days = document.getElementsByClassName( "days" )
-  for ( let i = 0; i < days.length; i++ ) {
-    days[ i ].querySelectorAll( ".day-1" )[ 0 ].textContent = daynames[ currentdate.getDay() ] + " " + currentdate.getDate()
-    currentdate.setDate( currentdate.getDate() + 1 )
-    days[ i ].querySelectorAll( ".day-2" )[ 0 ].textContent = daynames[ currentdate.getDay() ] + " " + currentdate.getDate()
-    currentdate.setDate( currentdate.getDate() + 1 )
-    days[ i ].querySelectorAll( ".day-3" )[ 0 ].textContent = daynames[ currentdate.getDay() ] + " " + currentdate.getDate()
-    currentdate.setDate( currentdate.getDate() + 1 )
-    days[ i ].querySelectorAll( ".day-4" )[ 0 ].textContent = daynames[ currentdate.getDay() ] + " " + currentdate.getDate()
-    currentdate.setDate( currentdate.getDate() + 1 )
-    days[ i ].querySelectorAll( ".day-5" )[ 0 ].textContent = daynames[ currentdate.getDay() ] + " " + currentdate.getDate()
-    currentdate.setDate( currentdate.getDate() + 1 )
-    days[ i ].querySelectorAll( ".day-6" )[ 0 ].textContent = daynames[ currentdate.getDay() ] + " " + currentdate.getDate()
-    currentdate.setDate( currentdate.getDate() + 1 )
-    days[ i ].querySelectorAll( ".day-7" )[ 0 ].textContent = daynames[ currentdate.getDay() ] + " " + currentdate.getDate()
+  for( let index = 0; index < days.length; index++ ) {
+    days[ index ].querySelectorAll( ".day-1" )[ 0 ].textContent = `${dayNames[ currentDate.getDay() ]} ${currentDate.getDate()}`
+    currentDate.setDate( currentDate.getDate() + 1 )
+    days[ index ].querySelectorAll( ".day-2" )[ 0 ].textContent = `${dayNames[ currentDate.getDay() ]} ${currentDate.getDate()}`
+    currentDate.setDate( currentDate.getDate() + 1 )
+    days[ index ].querySelectorAll( ".day-3" )[ 0 ].textContent = `${dayNames[ currentDate.getDay() ]} ${currentDate.getDate()}`
+    currentDate.setDate( currentDate.getDate() + 1 )
+    days[ index ].querySelectorAll( ".day-4" )[ 0 ].textContent = `${dayNames[ currentDate.getDay() ]} ${currentDate.getDate()}`
+    currentDate.setDate( currentDate.getDate() + 1 )
+    days[ index ].querySelectorAll( ".day-5" )[ 0 ].textContent = `${dayNames[ currentDate.getDay() ]} ${currentDate.getDate()}`
+    currentDate.setDate( currentDate.getDate() + 1 )
+    days[ index ].querySelectorAll( ".day-6" )[ 0 ].textContent = `${dayNames[ currentDate.getDay() ]} ${currentDate.getDate()}`
+    currentDate.setDate( currentDate.getDate() + 1 )
+    days[ index ].querySelectorAll( ".day-7" )[ 0 ].textContent = `${dayNames[ currentDate.getDay() ]} ${currentDate.getDate()}`
   }
 }
